@@ -4,3 +4,325 @@ format: html
 editor: visual
 ---
 
+```{r}
+library(readxl)
+library(FactoMineR)
+library(dplyr)
+library(janitor)
+library(purrr)
+library(tidyr)
+library(tibble)
+library(NaileR)
+library(stringr)
+library(ollamar)
+```
+
+# Lecture des données
+
+```{r}
+data_projects_de <- read_excel("../data/data_projects_de_no_contact.xlsx")
+data_projects_fr <- read_excel("../data/data_projects_fr_no_contact.xlsx")
+```
+
+```{r}
+colnames(data_projects_fr) <- colnames(data_projects_de) <- c(
+  "information_sheet_id", "name", "information_sheet_type", 
+  "description", "organization", "level", "i", "ii", "iii", "a", 
+  "b", "c", "d", "related_projects_and_measures", "particular_strengths", 
+  "key_lessons_learned_from_implementation", "additional_information", 
+  "impact", "language", "scope", "theme", "target_group", 
+  "risk_factors_of_vulnerability_only_pilot_adults", 
+  "particularly_vulnerable_groups", "multipliers", 
+  "life_transition_phases_only_pilot_adults", "setting", 
+  "policy_type", "networking_type", "public_information_type", 
+  "communication_channels", "networking_intensity", 
+  "participation", "behavioral_and_structural_level", "priorities"
+)
+```
+
+Même nombre de lignes et de colonnes ?
+
+```{r}
+dim(data_projects_de)
+dim(data_projects_fr)
+```
+
+Même variabilité ?
+
+```{r}
+res_acm_de <- MCA(
+  data_projects_de |> 
+    mutate(
+      across(
+        everything(), 
+        as.factor
+      )
+    ) |> 
+    as.data.frame(), 
+  graph = FALSE
+)
+```
+
+```{r}
+res_acm_de$eig[1:3,]
+```
+
+```{r}
+res_acm_fr <- MCA(
+  data_projects_fr |> 
+    mutate(
+      across(
+        everything(), 
+        as.factor
+      )
+    ) |> 
+    as.data.frame(), 
+  graph = FALSE
+)
+```
+
+```{r}
+res_acm_fr$eig[1:3,]
+```
+
+# Manipulation des données - focus sur les données FR
+
+```{r}
+data_projects <- data_projects_fr
+```
+
+## Suppression des colonnes sans variabilité
+
+```{r}
+vec_col_no_variability <- data_projects |> 
+  map(
+    ~ length(unique(.x))
+  ) |> 
+  keep(
+    ~ .x == 1
+  ) |> 
+  names()
+
+data_projects_without_col_no_varia <- data_projects |> 
+  select(
+    - all_of(vec_col_no_variability)
+  )
+```
+
+## Remplacer des NA dans les colonnes i, ii, etc.
+
+```{r}
+data_projects_no_na <- data_projects_without_col_no_varia |> 
+  mutate(
+    across(
+      c(
+        i, iii, a, b, c, d
+      ),
+      ~ ifelse(
+          is.na(.x), "Non", "Oui"
+      )
+    )
+  )
+```
+
+## Discrétisation des colonnes avec plusieurs valeurs
+
+```{r}
+transform_to_disjunctive <- function(
+    data, 
+    column, 
+    delim = ", "
+) {
+  
+  column_name <- paste0(as_label(enquo(column)), "_")
+
+  data |> 
+    separate_longer_delim(
+      {{column}}, delim = delim
+    ) |> 
+    mutate(
+      {{column}} := paste0(column_name, {{column}}), 
+      {{column}} := factor({{column}}), 
+      value = "Oui"
+    ) |> 
+    pivot_wider(
+      names_from = {{column}},
+      values_from = value,
+      values_fill = "Non"
+    ) 
+  
+}
+
+data_projects_disjunctive_cols <- c(
+  "language", "scope", "theme", "target_group", 
+  "particularly_vulnerable_groups", "multipliers", "setting", 
+  "policy_type", "networking_type", "public_information_type",
+  "communication_channels", "networking_intensity", "participation",
+  "behavioral_and_structural_level"
+  ) |> 
+  reduce(
+    ~ transform_to_disjunctive(
+      .x, !!sym(.y)
+    ), 
+    .init = data_projects_no_na
+  ) |> 
+  transform_to_disjunctive(
+    priorities,
+    delim = ", [A-Z]"
+  ) |> 
+  clean_names()
+```
+
+## Transformation des colonnes en facteurs
+
+```{r}
+data_projects_ok_for_fa <- data_projects_disjunctive_cols |> 
+  mutate(
+    across(
+      c(
+        level, 
+        i, iii, 
+        a, b, c, d, 
+        starts_with("language"),
+        starts_with("scope"),
+        starts_with("theme"),
+        starts_with("target"),
+        risk_factors_of_vulnerability_only_pilot_adults,
+        starts_with("particularly"),
+        starts_with("multipliers"), 
+        life_transition_phases_only_pilot_adults, 
+        starts_with("setting"), 
+        starts_with("policy"), 
+        starts_with("networking"), 
+        starts_with("public"), 
+        starts_with("communication"), 
+        starts_with("networkingy"), 
+        starts_with("participation"), 
+        starts_with("behavioral"), 
+        starts_with("priorities")
+      ), 
+      as.factor
+    )
+  )
+```
+
+## Renommage des colonnes A, B, C, D
+
+```{r}
+data_projects_col_abcd <- data_projects_ok_for_fa |> 
+  rename(
+    a_children_teenagers_nutrition_physical_activity = a,
+    b_elderly_people_nutrition_physical_activity = b, 
+    c_children_teenagers_mental_health = c, 
+    d_elderly_people_mental_health = d
+  ) |> 
+  clean_names()
+```
+
+# Première analyse factorielle
+
+Colonnes d'intérêt : 
+
+- Nom
+- Description
+- Niveau
+- I
+- II
+- III
+- A
+- B
+- C
+- D
+- Thème
+- Groupe cible
+- Setting
+
+```{r}
+colnames(data_projects_col_abcd) <- colnames(data_projects_col_abcd) |> 
+  str_replace_all("_", ".")
+
+data_projects_for_mca <- data_projects_col_abcd |> 
+  select(
+    information.sheet.id,
+    name, 
+    description,
+    level,
+    i, iii, 
+    a.children.teenagers.nutrition.physical.activity, 
+    b.elderly.people.nutrition.physical.activity, 
+    c.children.teenagers.mental.health, 
+    d.elderly.people.mental.health,
+    related.projects.and.measures, 
+    starts_with("theme"), 
+    starts_with("target"),
+    starts_with("setting")
+  ) |> 
+  column_to_rownames(
+    var = "information.sheet.id"
+  ) 
+
+res_projects_mca <- data_projects_for_mca |> 
+  MCA(
+    quali.sup = c(
+      which(colnames(data_projects_for_mca) == "name"),
+      which(colnames(data_projects_for_mca) == "description")
+    ), 
+    quanti.sup = which(colnames(data_projects_for_mca) == "related.projects.and.measures")
+  )
+
+res_projects_hcpc <- res_projects_mca |> 
+  HCPC(
+    nb.clust = -1
+  )
+```
+
+```{r}
+intro_llm <- c("Dans cette étude, nous avons
+collecté plusieurs informations sur des projets
+pour la prévention dans le domaine des soins. Cela inclut
+promouvoir une alimentation équilibrée, une activité physique adéquate, et 
+une meilleure santé psychique des enfants, des jeunes adultes et des personnes
+âgées. Pour cela, différents niveaux d'actions peuvent être mis en place : 
+interventions, policy, mise en réseau et information du public. Au niveau
+intervention, des projets sont mis en oeuvre pour mobiliser les spécialistes
+et les personnes de références. Au niveau policy, des mesures et des directives
+réglementaires sont conçues. Au niveau mise en réseau, les cantons définissent
+des mesures de coopération avec différents acteurs du canton. Au niveau
+information au public, les groupes cibles sont sont sensibilisées et informées.
+Après avoir analysé les données, les projets ont
+été groupés en groupes homogènes de projets (clusters). 
+Le niveau (ou level) est très important ici.") |> 
+  str_replace_all("\n", " ")
+
+request_llm <- c("S'il te plait, résume les caractéristiques
+de chaque groupe de projets. Ensuite, donne un nom à chaque groupe
+de projets, basé sur tes conclusions.") |> 
+  str_replace_all("\n", " ")
+```
+
+```{r}
+res_prompt_llm <- nail_catdes(
+  dataset = res_projects_hcpc$data.clust, 
+  num.var = ncol(res_projects_hcpc$data.clust),
+  introduction = intro_llm,
+  request = request_llm,
+  proba = 0.05,
+  isolate.groups = FALSE, 
+  drop.negative = FALSE,
+  generate = FALSE
+)
+
+res_prompt_llm <- res_prompt_llm |> 
+  str_replace_all("Observations", "Projects")
+```
+
+```{r}
+res_desc_llm <- generate(
+  model = "llama3.1", 
+  prompt = res_prompt_llm, 
+  output = "text"
+)
+
+cat(res_desc_llm)
+```
+
