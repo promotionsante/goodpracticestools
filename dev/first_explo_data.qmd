@@ -457,3 +457,12 @@ res_desc_llm <- generate(
 cat(res_desc_llm)
 ```
 
+```{r}
+res_desc_llm_de <- generate(
+  model = "llama3.1", 
+  prompt = paste0("Peux-tu me traduire tout le texte suivant en allemand en gardant la même structure :", res_desc_llm),
+  output = "text"
+)
+
+cat(res_desc_llm_de)
+```
