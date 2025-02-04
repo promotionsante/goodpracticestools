@@ -1,0 +1,459 @@
+---
+title: "Explo data"
+format: html
+editor: visual
+---
+
+```{r}
+library(readxl)
+library(FactoMineR)
+library(dplyr)
+library(janitor)
+library(purrr)
+library(tidyr)
+library(tibble)
+library(NaileR)
+library(stringr)
+library(ollamar)
+library(tm)
+library(textstem)
+library(spacyr)
+```
+
+```{r}
+# Charger reticulate
+# library(reticulate)
+# 
+# # Installer spaCy
+# py_install("spacy")
+# 
+# # Télécharger le modèle français
+# spacy <- import("spacy")
+# spacy$cli$download("fr_core_news_sm")
+```
+
+# Lecture des données
+
+```{r}
+data_projects_de <- read_excel("../data/data_projects_de_no_contact.xlsx")
+data_projects_fr <- read_excel("../data/data_projects_fr_no_contact.xlsx")
+```
+
+```{r}
+colnames(data_projects_fr) <- colnames(data_projects_de) <- c(
+  "information_sheet_id", "name", "information_sheet_type", 
+  "description", "organization", "level", "i", "ii", "iii", "a", 
+  "b", "c", "d", "related_projects_and_measures", "particular_strengths", 
+  "key_lessons_learned_from_implementation", "additional_information", 
+  "impact", "language", "scope", "theme", "target_group", 
+  "risk_factors_of_vulnerability_only_pilot_adults", 
+  "particularly_vulnerable_groups", "multipliers", 
+  "life_transition_phases_only_pilot_adults", "setting", 
+  "policy_type", "networking_type", "public_information_type", 
+  "communication_channels", "networking_intensity", 
+  "participation", "behavioral_and_structural_level", "priorities"
+)
+```
+
+Même nombre de lignes et de colonnes ?
+
+```{r}
+dim(data_projects_de)
+dim(data_projects_fr)
+```
+
+Même variabilité ?
+
+```{r}
+res_acm_de <- MCA(
+  data_projects_de |> 
+    mutate(
+      across(
+        everything(), 
+        as.factor
+      )
+    ) |> 
+    as.data.frame(), 
+  graph = FALSE
+)
+```
+
+```{r}
+res_acm_de$eig[1:3,]
+```
+
+```{r}
+res_acm_fr <- MCA(
+  data_projects_fr |> 
+    mutate(
+      across(
+        everything(), 
+        as.factor
+      )
+    ) |> 
+    as.data.frame(), 
+  graph = FALSE
+)
+```
+
+```{r}
+res_acm_fr$eig[1:3,]
+```
+
+# Manipulation des données - focus sur les données FR
+
+```{r}
+data_projects <- data_projects_fr
+```
+
+## Suppression des colonnes sans variabilité
+
+```{r}
+vec_col_no_variability <- data_projects |> 
+  map(
+    ~ length(unique(.x))
+  ) |> 
+  keep(
+    ~ .x == 1
+  ) |> 
+  names()
+
+data_projects_without_col_no_varia <- data_projects |> 
+  select(
+    - all_of(vec_col_no_variability)
+  )
+```
+
+## Remplacer des NA dans les colonnes i, ii, etc.
+
+```{r}
+data_projects_no_na <- data_projects_without_col_no_varia |> 
+  mutate(
+    across(
+      c(
+        i, iii, a, b, c, d
+      ),
+      ~ ifelse(
+          is.na(.x), "Non", "Oui"
+      )
+    )
+  )
+```
+
+## Discrétisation des colonnes avec plusieurs valeurs
+
+```{r}
+transform_to_disjunctive <- function(
+    data, 
+    column, 
+    delim = ", "
+) {
+  
+  column_name <- paste0(as_label(enquo(column)), "_")
+
+  data |> 
+    separate_longer_delim(
+      {{column}}, delim = delim
+    ) |> 
+    mutate(
+      {{column}} := paste0(column_name, {{column}}), 
+      {{column}} := factor({{column}}), 
+      value = "Oui"
+    ) |> 
+    pivot_wider(
+      names_from = {{column}},
+      values_from = value,
+      values_fill = "Non"
+    ) 
+  
+}
+
+data_projects_disjunctive_cols <- c(
+  "language", "scope", "theme", "target_group", 
+  "particularly_vulnerable_groups", "multipliers", "setting", 
+  "policy_type", "networking_type", "public_information_type",
+  "communication_channels", "networking_intensity", "participation",
+  "behavioral_and_structural_level"
+  ) |> 
+  reduce(
+    ~ transform_to_disjunctive(
+      .x, !!sym(.y)
+    ), 
+    .init = data_projects_no_na
+  ) |> 
+  transform_to_disjunctive(
+    priorities,
+    delim = ", [A-Z]"
+  ) |> 
+  clean_names()
+```
+
+## Transformation des colonnes en facteurs
+
+```{r}
+data_projects_ok_for_fa <- data_projects_disjunctive_cols |> 
+  mutate(
+    across(
+      c(
+        level, 
+        i, iii, 
+        a, b, c, d, 
+        starts_with("language"),
+        starts_with("scope"),
+        starts_with("theme"),
+        starts_with("target"),
+        risk_factors_of_vulnerability_only_pilot_adults,
+        starts_with("particularly"),
+        starts_with("multipliers"), 
+        life_transition_phases_only_pilot_adults, 
+        starts_with("setting"), 
+        starts_with("policy"), 
+        starts_with("networking"), 
+        starts_with("public"), 
+        starts_with("communication"), 
+        starts_with("networkingy"), 
+        starts_with("participation"), 
+        starts_with("behavioral"), 
+        starts_with("priorities")
+      ), 
+      as.factor
+    )
+  )
+```
+
+## Renommage des colonnes A, B, C, D
+
+```{r}
+data_projects_col_abcd <- data_projects_ok_for_fa |> 
+  rename(
+    a_children_teenagers_nutrition_physical_activity = a,
+    b_elderly_people_nutrition_physical_activity = b, 
+    c_children_teenagers_mental_health = c, 
+    d_elderly_people_mental_health = d
+  ) |> 
+  clean_names()
+```
+
+## Analyse de la colonne description
+
+```{r}
+data_projects_col_description_clean <- data_projects_col_abcd
+
+data_projects_col_description_clean$description <- tolower(
+  data_projects_col_description_clean$description
+)
+
+data_projects_col_description_clean$description <- data_projects_col_description_clean$description |> 
+  str_replace_all("[[:punct:]]|●|[0-9]", " ")
+
+data_projects_col_description_clean$description <- removeWords(
+  data_projects_col_description_clean$description, 
+  c(stopwords("fr"), "l ", "les", "a ")
+)
+
+spacy_initialize(model = "fr_core_news_sm")
+
+data_projects_col_description_clean$description <- data_projects_col_description_clean$description |> 
+  map(
+    ~ spacy_parse(
+        .x, 
+        lemma = TRUE
+      )$lemma |> 
+      paste(
+        collapse = " "
+      ) |> 
+      str_squish()
+  ) |> 
+  unlist()
+
+res_textual_description <- textual(
+  data_projects_col_description_clean,
+  num.text = 3, 
+  contingence.by = 1, 
+  sep.word = " "
+)
+
+data_words_description_selection <- res_textual_description$cont.table[, apply(res_textual_description$cont.table, MARGIN = 2, FUN = sum) >= 10] |> 
+  as.data.frame() 
+
+colnames(data_words_description_selection) <- paste0("desc_", colnames(data_words_description_selection))
+
+data_words_description_selection <- data_words_description_selection |> 
+  rownames_to_column(
+    var = "information_sheet_id"
+  ) |> 
+  as_tibble()
+```
+
+## Ajout de la colonne description préparée
+
+```{r}
+data_projects_ready_analysis <- left_join(
+  data_projects_col_abcd |> select(- description),
+  data_words_description_selection,
+  by = "information_sheet_id"
+)
+```
+
+# Première exploration chiffrée
+
+## Répartition A/B/C/D
+
+```{r}
+data_projects_ready_analysis |> 
+  filter(a.children.teenagers.nutrition.physical.activity == "Oui") |> 
+  nrow()
+
+data_projects_ready_analysis |> 
+  filter(b.elderly.people.nutrition.physical.activity == "Oui") |> 
+  nrow()
+
+data_projects_ready_analysis |> 
+  filter(c.children.teenagers.mental.health == "Oui") |> 
+  nrow()
+
+data_projects_ready_analysis |> 
+  filter(d.elderly.people.mental.health == "Oui") |> 
+  nrow()
+```
+
+## Répartition niveau
+
+```{r}
+data_projects_ready_analysis |> 
+  count(level)
+```
+
+# Analyse factorielle - Synthèse et réduction de la dimension
+
+Colonnes d'intérêt : 
+
+- Nom
+- Description lematisée
+- Niveau
+- I
+- II
+- III
+- A
+- B
+- C
+- D
+- Thème
+- Groupe cible
+- Setting
+
+```{r}
+colnames(data_projects_ready_analysis) <- colnames(data_projects_ready_analysis) |> 
+  str_replace_all("_", ".")
+
+data_projects_for_fa <- data_projects_ready_analysis |> 
+  select(
+    information.sheet.id,
+    level,
+    i, iii, 
+    a.children.teenagers.nutrition.physical.activity, 
+    b.elderly.people.nutrition.physical.activity, 
+    c.children.teenagers.mental.health, 
+    d.elderly.people.mental.health,
+    starts_with("theme"), 
+    starts_with("target"),
+    starts_with("setting")
+  ) |> 
+  column_to_rownames(
+    var = "information.sheet.id"
+  )
+
+res_projects_mca <- MCA(
+  data_projects_for_fa
+)
+
+res_projects_hcpc <- res_projects_mca |> 
+  HCPC(
+    nb.clust = -1
+  )
+
+res_projects_hcpc$desc.var
+
+res_projects_hcpc$data.clust |> 
+  count(clust)
+```
+
+## Restitution LLM
+
+### Ajout des mots de description
+
+```{r}
+data_for_llm <- left_join(
+  res_projects_hcpc$data.clust |> 
+    rownames_to_column(
+      var = "information.sheet.id"
+    ),
+  data_words_description_selection,
+  by = c("information.sheet.id" = "information_sheet_id")
+)
+
+colnames(data_for_llm) <- gsub("desc_", "", colnames(data_for_llm))
+```
+
+```{r}
+intro_llm <- c("Dans cette étude, nous avons
+collecté plusieurs informations sur des projets
+pour la prévention dans le domaine des soins. Cela inclut
+promouvoir une alimentation équilibrée, une activité physique adéquate, et 
+une meilleure santé psychique des enfants, des jeunes adultes et des personnes
+âgées. Pour cela, différents niveaux d'actions peuvent être mis en place : 
+interventions, policy, mise en réseau et information du public. Au niveau
+intervention, des projets sont mis en oeuvre pour mobiliser les spécialistes
+et les personnes de références. Au niveau policy, des mesures et des directives
+réglementaires sont conçues. Au niveau mise en réseau, les cantons définissent
+des mesures de coopération avec différents acteurs du canton. Au niveau
+information au public, les groupes cibles sont sont sensibilisées et informées.
+Après avoir analysé les données, les projets ont
+été groupés en groupes homogènes de projets (clusters).") |> 
+  str_replace_all("\n", " ")
+
+request_llm <- c("La desccription des projets est fournie dans la section
+'Données'. Sur la base de ces informations, dont ceraines sont données en anglais :
+1. Fourni une description de chaque groupe de projets, sous une forme littérale;
+2. Donne un nom à ce groupe
+Structure ta réponse comme cela:
+Groupe X : [Ta recommandation de nom ici]
+[Ton résumé des caractéristiques du groupe ici];
+Évite le terme 'Promotion' dans tes recommandations de noms et privilégie plutôt le terme de 'Prévention de la santé'.
+Si le groupe de projets est dédié à un type de publics (enfants, adolescents, jeunes adultes, personnes âgées), 
+fais le figurer dans le nom du groupe à chaque fois.") |> 
+  str_replace_all("\n", " ")
+```
+
+```{r}
+res_prompt_llm <- nail_catdes(
+  dataset = data_for_llm, 
+  num.var = which(colnames(data_for_llm) == "clust"),
+  introduction = intro_llm,
+  request = request_llm,
+  proba = 0.05,
+  isolate.groups = FALSE, 
+  drop.negative = TRUE,
+  generate = FALSE
+)
+
+res_prompt_llm <- res_prompt_llm |> 
+  str_replace_all("# Task", "# Tâche") |> 
+  str_replace_all("# Data", "# Données") |> 
+  str_replace_all("## Group", "## Groupe de projets") |> 
+  str_replace_all("Observations in this group are \\*more\\* likely to be associated with the following response categories. In this output, the name of the variable precedes the category that characterises our observations by its strong association:", "Les projets de ce groupe sont \\*plus\\* susceptibles d'être associés aux caractéristiques suivantes. Dans cette sortie, le nom de la variable précède la catégorie qui caractérise nos observations par sa forte association :") |> 
+  str_replace_all("Observations in this group have quite \\*high\\* values for the following variables:", "Les projets de ce groupe sont \\*plus\\* susceptibles de contenir dans leur description les mots suivants:")
+
+cat(res_prompt_llm)
+```
+
+```{r}
+res_desc_llm <- generate(
+  model = "llama3.1", 
+  prompt = res_prompt_llm, 
+  output = "text"
+)
+
+cat(res_desc_llm)
+```
+
