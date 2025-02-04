@@ -15,6 +15,21 @@ library(tibble)
 library(NaileR)
 library(stringr)
 library(ollamar)
+library(tm)
+library(textstem)
+library(spacyr)
+```
+
+```{r}
+# Charger reticulate
+# library(reticulate)
+# 
+# # Installer spaCy
+# py_install("spacy")
+# 
+# # Télécharger le modèle français
+# spacy <- import("spacy")
+# spacy$cli$download("fr_core_news_sm")
 ```
 
 # Lecture des données
@@ -219,12 +234,102 @@ data_projects_col_abcd <- data_projects_ok_for_fa |>
   clean_names()
 ```
 
-# Première analyse factorielle
+## Analyse de la colonne description
+
+```{r}
+data_projects_col_description_clean <- data_projects_col_abcd
+
+data_projects_col_description_clean$description <- tolower(
+  data_projects_col_description_clean$description
+)
+
+data_projects_col_description_clean$description <- data_projects_col_description_clean$description |> 
+  str_replace_all("[[:punct:]]|●|[0-9]", " ")
+
+data_projects_col_description_clean$description <- removeWords(
+  data_projects_col_description_clean$description, 
+  c(stopwords("fr"), "l ", "les", "a ")
+)
+
+spacy_initialize(model = "fr_core_news_sm")
+
+data_projects_col_description_clean$description <- data_projects_col_description_clean$description |> 
+  map(
+    ~ spacy_parse(
+        .x, 
+        lemma = TRUE
+      )$lemma |> 
+      paste(
+        collapse = " "
+      ) |> 
+      str_squish()
+  ) |> 
+  unlist()
+
+res_textual_description <- textual(
+  data_projects_col_description_clean,
+  num.text = 3, 
+  contingence.by = 1, 
+  sep.word = " "
+)
+
+data_words_description_selection <- res_textual_description$cont.table[, apply(res_textual_description$cont.table, MARGIN = 2, FUN = sum) >= 10] |> 
+  as.data.frame() 
+
+colnames(data_words_description_selection) <- paste0("desc_", colnames(data_words_description_selection))
+
+data_words_description_selection <- data_words_description_selection |> 
+  rownames_to_column(
+    var = "information_sheet_id"
+  ) |> 
+  as_tibble()
+```
+
+## Ajout de la colonne description préparée
+
+```{r}
+data_projects_ready_analysis <- left_join(
+  data_projects_col_abcd |> select(- description),
+  data_words_description_selection,
+  by = "information_sheet_id"
+)
+```
+
+# Première exploration chiffrée
+
+## Répartition A/B/C/D
+
+```{r}
+data_projects_ready_analysis |> 
+  filter(a.children.teenagers.nutrition.physical.activity == "Oui") |> 
+  nrow()
+
+data_projects_ready_analysis |> 
+  filter(b.elderly.people.nutrition.physical.activity == "Oui") |> 
+  nrow()
+
+data_projects_ready_analysis |> 
+  filter(c.children.teenagers.mental.health == "Oui") |> 
+  nrow()
+
+data_projects_ready_analysis |> 
+  filter(d.elderly.people.mental.health == "Oui") |> 
+  nrow()
+```
+
+## Répartition niveau
+
+```{r}
+data_projects_ready_analysis |> 
+  count(level)
+```
+
+# Analyse factorielle - Synthèse et réduction de la dimension
 
 Colonnes d'intérêt : 
 
 - Nom
-- Description
+- Description lematisée
 - Niveau
 - I
 - II
@@ -238,42 +343,56 @@ Colonnes d'intérêt :
 - Setting
 
 ```{r}
-colnames(data_projects_col_abcd) <- colnames(data_projects_col_abcd) |> 
+colnames(data_projects_ready_analysis) <- colnames(data_projects_ready_analysis) |> 
   str_replace_all("_", ".")
 
-data_projects_for_mca <- data_projects_col_abcd |> 
+data_projects_for_fa <- data_projects_ready_analysis |> 
   select(
     information.sheet.id,
-    name, 
-    description,
     level,
     i, iii, 
     a.children.teenagers.nutrition.physical.activity, 
     b.elderly.people.nutrition.physical.activity, 
     c.children.teenagers.mental.health, 
     d.elderly.people.mental.health,
-    related.projects.and.measures, 
     starts_with("theme"), 
     starts_with("target"),
     starts_with("setting")
   ) |> 
   column_to_rownames(
     var = "information.sheet.id"
-  ) 
-
-res_projects_mca <- data_projects_for_mca |> 
-  MCA(
-    quali.sup = c(
-      which(colnames(data_projects_for_mca) == "name"),
-      which(colnames(data_projects_for_mca) == "description")
-    ), 
-    quanti.sup = which(colnames(data_projects_for_mca) == "related.projects.and.measures")
   )
+
+res_projects_mca <- MCA(
+  data_projects_for_fa
+)
 
 res_projects_hcpc <- res_projects_mca |> 
   HCPC(
     nb.clust = -1
   )
+
+res_projects_hcpc$desc.var
+
+res_projects_hcpc$data.clust |> 
+  count(clust)
+```
+
+## Restitution LLM
+
+### Ajout des mots de description
+
+```{r}
+data_for_llm <- left_join(
+  res_projects_hcpc$data.clust |> 
+    rownames_to_column(
+      var = "information.sheet.id"
+    ),
+  data_words_description_selection,
+  by = c("information.sheet.id" = "information_sheet_id")
+)
+
+colnames(data_for_llm) <- gsub("desc_", "", colnames(data_for_llm))
 ```
 
 ```{r}
@@ -290,30 +409,42 @@ réglementaires sont conçues. Au niveau mise en réseau, les cantons définisse
 des mesures de coopération avec différents acteurs du canton. Au niveau
 information au public, les groupes cibles sont sont sensibilisées et informées.
 Après avoir analysé les données, les projets ont
-été groupés en groupes homogènes de projets (clusters). 
-Le niveau (ou level) est très important ici.") |> 
+été groupés en groupes homogènes de projets (clusters).") |> 
   str_replace_all("\n", " ")
 
-request_llm <- c("S'il te plait, résume les caractéristiques
-de chaque groupe de projets. Ensuite, donne un nom à chaque groupe
-de projets, basé sur tes conclusions.") |> 
+request_llm <- c("La desccription des projets est fournie dans la section
+'Données'. Sur la base de ces informations, dont ceraines sont données en anglais :
+1. Fourni une description de chaque groupe de projets, sous une forme littérale;
+2. Donne un nom à ce groupe
+Structure ta réponse comme cela:
+Groupe X : [Ta recommandation de nom ici]
+[Ton résumé des caractéristiques du groupe ici];
+Évite le terme 'Promotion' dans tes recommandations de noms et privilégie plutôt le terme de 'Prévention de la santé'.
+Si le groupe de projets est dédié à un type de publics (enfants, adolescents, jeunes adultes, personnes âgées), 
+fais le figurer dans le nom du groupe à chaque fois.") |> 
   str_replace_all("\n", " ")
 ```
 
 ```{r}
 res_prompt_llm <- nail_catdes(
-  dataset = res_projects_hcpc$data.clust, 
-  num.var = ncol(res_projects_hcpc$data.clust),
+  dataset = data_for_llm, 
+  num.var = which(colnames(data_for_llm) == "clust"),
   introduction = intro_llm,
   request = request_llm,
   proba = 0.05,
   isolate.groups = FALSE, 
-  drop.negative = FALSE,
+  drop.negative = TRUE,
   generate = FALSE
 )
 
 res_prompt_llm <- res_prompt_llm |> 
-  str_replace_all("Observations", "Projects")
+  str_replace_all("# Task", "# Tâche") |> 
+  str_replace_all("# Data", "# Données") |> 
+  str_replace_all("## Group", "## Groupe de projets") |> 
+  str_replace_all("Observations in this group are \\*more\\* likely to be associated with the following response categories. In this output, the name of the variable precedes the category that characterises our observations by its strong association:", "Les projets de ce groupe sont \\*plus\\* susceptibles d'être associés aux caractéristiques suivantes. Dans cette sortie, le nom de la variable précède la catégorie qui caractérise nos observations par sa forte association :") |> 
+  str_replace_all("Observations in this group have quite \\*high\\* values for the following variables:", "Les projets de ce groupe sont \\*plus\\* susceptibles de contenir dans leur description les mots suivants:")
+
+cat(res_prompt_llm)
 ```
 
 ```{r}
