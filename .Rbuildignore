@@ -4,3 +4,6 @@
 ^\.github$
 dev/
 ^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
