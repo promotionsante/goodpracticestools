@@ -1,9 +1,9 @@
 Package: goodpracticestools
-Title: What the Package Does (One Line, Title Case)
+Title: Create the elements of the overview "Summary of Best Practices in Cantonal Action Programs" by Promotion Santé Suisse
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Margot", "Brard", , "margot@thinkr.fr", role = c("aut", "cre"))
+Description: Allows the person generating the overview to enrich it with analytical elements (charts, text, etc.)..
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
