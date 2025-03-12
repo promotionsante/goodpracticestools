@@ -1,0 +1,5 @@
+articles:
+- title: Data preparation
+  navbar: Data preparation
+  contents:
+  - how-to-prepare-data-for-statistical-analysis

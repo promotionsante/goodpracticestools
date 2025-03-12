@@ -29,4 +29,8 @@ pak::pak("promotionsante/goodpracticestools")
 
 ## Documentation
 
-*TBC*
+As the designer of the HTML summary, you will find several elements in
+the package documentation to help you use the different features:
+
+- [How to prepare data for statistical
+  analysis](https://promotionsante.github.io/goodpracticestools/articles/how-to-prepare-data-for-statistical-analysis.html)

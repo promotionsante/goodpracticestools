@@ -3,8 +3,12 @@ Title: Create the elements of the overview "Summary of Best Practices in Cantona
 Version: 0.0.0.9000
 Authors@R: 
     person("Margot", "Brard", , "margot@thinkr.fr", role = c("aut", "cre"))
-Description: Allows the person generating the overview to enrich it with analytical elements (charts, text, etc.)..
+Description: Allows the person generating the overview to enrich it with analytical elements (charts, text, etc.).
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
