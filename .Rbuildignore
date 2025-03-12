@@ -1,3 +1,5 @@
 ^goodpracticestools\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^\.github$
+dev/
