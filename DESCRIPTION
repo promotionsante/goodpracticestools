@@ -10,9 +10,9 @@ License: GPL (>= 3)
 Depends: 
     R (>= 3.5)
 Imports: 
+    dplyr,
     glue
 Suggests: 
-    dplyr,
     knitr,
     pkgload,
     rmarkdown,
