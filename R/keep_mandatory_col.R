@@ -3,6 +3,7 @@
 #' @param data Data frame. Raw data about projects.
 #'
 #' @importFrom dplyr select
+#' @importFrom tidyselect all_off
 #'
 #' @return Data frame with mandatory columns
 keep_mandatory_col <- function(
@@ -10,6 +11,8 @@ keep_mandatory_col <- function(
 ) {
 
   data |>
-    select(vec_mandatory_col)
+    select(
+      all_of(vec_mandatory_col)
+    )
 
 }
