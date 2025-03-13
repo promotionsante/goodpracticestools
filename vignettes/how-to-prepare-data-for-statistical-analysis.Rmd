@@ -14,6 +14,40 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(goodpracticestools)
+```{r setup, warning=FALSE, message=FALSE}
+# library(goodpracticestools)
+library(dplyr)
+library(stringr)
+library(knitr)
+pkgload::load_all()
+```
+
+## Raw data
+
+The raw FR example data is available in the `"data_raw_fr"` dataset:
+
+```{r}
+data("data_raw_fr")
+head(data_raw_fr) |> 
+  mutate(
+    across(
+      everything(), 
+      ~ str_trunc(.x, 20)
+    )
+  ) |> 
+  kable()
+```
+
+The DE version is available in the `"data_raw_de"` dataset:
+
+```{r}
+data("data_raw_de")
+head(data_raw_de) |> 
+  mutate(
+    across(
+      everything(), 
+      ~ str_trunc(.x, 20)
+    )
+  ) |> 
+  kable()
 ```
