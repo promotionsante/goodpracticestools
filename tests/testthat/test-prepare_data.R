@@ -78,26 +78,96 @@ test_that("prepare_data works", {
           NA_character_,
           NA_character_
         ),
-        theme = c(
-          "Activité physique, Alimentation, Santé psychique",
-          "Santé psychique, Alimentation, Activité physique",
-          "Santé psychique, Alimentation, Activité physique",
-          "Alimentation, Santé psychique, Activité physique",
-          "Activité physique"
+        theme_activite_physique = c(
+          "Oui",
+          "Oui",
+          "Oui",
+          "Oui",
+          "Oui"
         ),
-        groupe_cible = c(
-          "Non applicable",
-          "Non applicable",
-          "Ensemble de la population",
-          "Les multiplicateur-trice-s sont le groupe cible primaire de cette mesure.",
-          "Non applicable"
+        theme_alimentation = c(
+          "Oui",
+          "Oui",
+          "Oui",
+          "Oui",
+          "Non"
         ),
-        setting = c(
-          "Autres settings: Sämtliche Themen rund um das Alter",
-          "Commune/quartier/environnement résidentiel, Installation de loisirs / association",
-          "Famille/domicile, Lieux d’accueil et d’éducation extra-familiaux, Installation de loisirs / association, Commune/quartier/environnement résidentiel, École (de l’école enfantine au niveau tertiaire)",
-          "Commune/quartier/environnement résidentiel",
-          "Pas de setting spécifique"
+        theme_sante_psychique = c(
+          "Oui",
+          "Oui",
+          "Oui",
+          "Oui",
+          "Non"
+        ),
+        groupe_cible_non_applicable = c(
+          "Oui",
+          "Oui",
+          "Non",
+          "Non",
+          "Oui"
+        ),
+        groupe_cible_ensemble_de_la_population = c(
+          "Non",
+          "Non",
+          "Oui",
+          "Non",
+          "Non"
+        ),
+        groupe_cible_les_multiplicateur_trice_s_sont_le_groupe_cible_primaire_de_cette_mesure = c(
+          "Non",
+          "Non",
+          "Non",
+          "Oui",
+          "Non"
+        ),
+        setting_autres_settings_samtliche_themen_rund_um_das_alter = c(
+          "Oui",
+          "Non",
+          "Non",
+          "Non",
+          "Non"
+        ),
+        setting_commune_quartier_environnement_residentiel = c(
+          "Non",
+          "Oui",
+          "Oui",
+          "Oui",
+          "Non"
+        ),
+        setting_installation_de_loisirs_association = c(
+          "Non",
+          "Oui",
+          "Oui",
+          "Non",
+          "Non"
+        ),
+        setting_famille_domicile = c(
+          "Non",
+          "Non",
+          "Oui",
+          "Non",
+          "Non"
+        ),
+        setting_lieux_d_accueil_et_d_education_extra_familiaux = c(
+          "Non",
+          "Non",
+          "Oui",
+          "Non",
+          "Non"
+        ),
+        setting_ecole_de_l_ecole_enfantine_au_niveau_tertiaire = c(
+          "Non",
+          "Non",
+          "Oui",
+          "Non",
+          "Non"
+        ),
+        setting_pas_de_setting_specifique = c(
+          "Non",
+          "Non",
+          "Non",
+          "Non",
+          "Oui"
         )
       ),
       row.names = c(NA, -5L),

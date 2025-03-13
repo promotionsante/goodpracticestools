@@ -12,7 +12,10 @@ Depends:
 Imports: 
     dplyr,
     glue,
-    janitor
+    janitor,
+    rlang,
+    tidyr,
+    tidyselect
 Suggests: 
     knitr,
     pkgload,

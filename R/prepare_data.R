@@ -20,6 +20,15 @@ prepare_data <- function(
 
   data |>
     keep_mandatory_col() |>
-    clean_colnames()
+    clean_colnames() |>
+    create_disjunctive_col(
+      theme
+    ) |>
+    create_disjunctive_col(
+      groupe_cible
+    ) |>
+    create_disjunctive_col(
+      setting
+    )
 
 }
