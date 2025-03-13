@@ -1,5 +1,20 @@
-articles:
-- title: Data preparation
-  navbar: Data preparation
-  contents:
-  - how-to-prepare-data-for-statistical-analysis
+navbar:
+  structure:
+    left: [reference, user, tech, news]
+    right: [github]
+  components:
+    user:
+      text: User articles
+      menu:
+      - text: -------
+      - text: Data preparation
+      - text: How to prepare data for statistical analysi
+        href: articles/how-to-prepare-data-for-statistical-analysis.html
+      - text: -------
+      - text: Data analysis
+
+    tech:
+      text: Tech articles
+      menu:
+      - text: Architecture Decisions Records
+        href: articles/tech-adr.html
