@@ -58,6 +58,8 @@ Only French data are used for the stat aanalysis
 To avoid deisconeande entre jeux de données
 
 - Check that the expected columns are present
+- Keep only mandatory columns
+- Clean colnames and use more explicit ones for some columns
 
 ```{r}
 data_fr <- prepare_data(
@@ -65,3 +67,7 @@ data_fr <- prepare_data(
 )
 ```
 
+```{r}
+head(data_fr) |> 
+  kable()
+```

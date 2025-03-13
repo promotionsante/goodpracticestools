@@ -24,7 +24,7 @@ test_that("prepare_data works", {
     object = prepare_data(data = extract_data_raw_fr),
     expected = structure(
       list(
-        fiche_information_id =
+        fiche_d_informations_id =
           c("F178", "F177", "F176", "F175", "F174"),
         nom = c(
           "Forum pour les questions liées à la vieillesse",
@@ -47,9 +47,9 @@ test_that("prepare_data works", {
           "Information au public",
           "Policy"
         ),
-        enfants_adolescents = c(NA, "X", "X", NA, "X"),
-        adultes = c(NA, NA, NA, NA, NA),
-        personnes_agees = c("X", NA, "X", "X", "X"),
+        i_enfants_adolescents = c(NA, "X", "X", NA, "X"),
+        ii_adultes = c(NA, NA, NA, NA, NA),
+        iii_personnes_agees = c("X", NA, "X", "X", "X"),
         a_enfants_adolescents_nutrition_activite_physique = c(
           NA_character_,
           NA_character_,
