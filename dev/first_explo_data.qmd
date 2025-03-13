@@ -326,21 +326,21 @@ data_projects_ready_analysis |>
 
 # Analyse factorielle - Synthèse et réduction de la dimension
 
-Colonnes d'intérêt : 
+Colonnes d'intérêt :
 
-- Nom
-- Description lematisée
-- Niveau
-- I
-- II
-- III
-- A
-- B
-- C
-- D
-- Thème
-- Groupe cible
-- Setting
+-   Nom
+-   Description lematisée
+-   Niveau
+-   I
+-   II
+-   III
+-   A
+-   B
+-   C
+-   D
+-   Thème
+-   Groupe cible
+-   Setting
 
 ```{r}
 colnames(data_projects_ready_analysis) <- colnames(data_projects_ready_analysis) |> 

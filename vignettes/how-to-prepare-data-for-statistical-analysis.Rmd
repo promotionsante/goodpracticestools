@@ -14,6 +14,81 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, warning=FALSE, message=FALSE}
 library(goodpracticestools)
+library(dplyr)
+library(stringr)
+library(knitr)
+```
+
+## Raw data
+
+The raw FR example data is available in the `"data_raw_fr"` dataset:
+
+```{r}
+data("data_raw_fr")
+head(data_raw_fr) |> 
+  mutate(
+    across(
+      everything(), 
+      ~ str_trunc(.x, 20)
+    )
+  ) |> 
+  kable()
+```
+
+The DE version is available in the `"data_raw_de"` dataset:
+
+```{r}
+data("data_raw_de")
+head(data_raw_de) |> 
+  mutate(
+    across(
+      everything(), 
+      ~ str_trunc(.x, 20)
+    )
+  ) |> 
+  kable()
+```
+
+## How to prepare data for statistical analysis
+
+Only **French data** is used for the statistical analysis (see ADR X).
+
+The preparation steps are as follows:
+
+- Verify that the expected columns are present
+- Retain only the mandatory columns
+- Clean column names and use more explicit ones for certain columns
+- For the `Thème`, `Groupe cible`, and `Setting` columns, which contain multiple values per cell, convert them into disjunctive columns
+- Replace missing values (`NA`) in columns I, II, III and A, B, C, D.
+
+These steps are implemented in the function `prepare_data()`:
+
+```{r}
+data_fr <- prepare_data(
+  data = data_raw_fr
+)
+```
+
+The result is as follows:
+
+```{r}
+data_fr |> 
+  select(
+    fiche_d_informations_id,
+    nom,
+    i_enfants_adolescents,
+    ii_adultes,
+    iii_personnes_agees,
+    a_enfants_adolescents_nutrition_activite_physique,
+    b_personnes_agees_nutrition_activite_physique,
+    c_enfants_adolescents_sante_psychique,
+    d_personnes_agees_sante_psychique, 
+    starts_with("theme"), 
+    starts_with("groupe_cible"),
+    starts_with("setting")
+  ) |> 
+  head() |> 
+  kable()
 ```

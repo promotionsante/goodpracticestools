@@ -1,0 +1,37 @@
+---
+title: "Architecture Decision Records"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{adr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## ADR001: Management of two languages (FR and DE) in data analysis
+
+#### Background
+
+The HTML overview must be available in two languages (French and German) because the recipients in the Swiss cantons speak one of these two languages.
+
+The data on the projects (in XLSX format) is available in both French and German, with the extraction having been done from the PSCH organization's data software.
+
+The question arises of how to manage both files in parallel during data analysis, especially since marginal differences —though still differences— were observed in the raw data.
+
+*Note: The existence of differences was identified by performing Factor Analysis on each of the raw datasets. The eigenvalues from these two analyses were not strictly identical, indicating differences in the raw data.*
+
+#### Decision
+
+The analyses (graphs, factor analyses, classification, interpretation of classes) will be carried out using **only the French raw dataset**. These will **then be translated into German**, as the translations required are expected to be marginal. However, the raw tables displayed in the summary will show the French raw data on one side and the German raw data on the other, in order to avoid the complexity of translation at this stage.
+
+#### Risks
+
+-   There may be poor translation in German for statistical analyses
+
+-   The German results may not align perfectly with the DE raw data

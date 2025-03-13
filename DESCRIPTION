@@ -1,14 +1,31 @@
 Package: goodpracticestools
-Title: Create the elements of the overview "Summary of Best Practices in Cantonal Action Programs" by Promotion Santé Suisse
+Title: Create the elements of the overview "Summary of Best Practices in
+    Cantonal Action Programs" by Promotion Santé Suisse
 Version: 0.0.0.9000
 Authors@R: 
     person("Margot", "Brard", , "margot@thinkr.fr", role = c("aut", "cre"))
-Description: Allows the person generating the overview to enrich it with analytical elements (charts, text, etc.).
+Description: Allows the person generating the overview to enrich it with
+    analytical elements (charts, text, etc.).
 License: GPL (>= 3)
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+Depends: 
+    R (>= 3.5)
+Imports: 
+    dplyr,
+    glue,
+    janitor,
+    rlang,
+    tidyr,
+    tidyselect
 Suggests: 
     knitr,
-    rmarkdown
-VignetteBuilder: knitr
+    pkgload,
+    rmarkdown,
+    stringr,
+    testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
