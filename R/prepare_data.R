@@ -2,6 +2,8 @@
 #'
 #' @param data Data frame. Raw data about projects.
 #'
+#' @importFrom dplyr mutate across any_of
+#'
 #' @return Data frame ready for analysis
 #' @export
 #'
@@ -29,6 +31,23 @@ prepare_data <- function(
     ) |>
     create_disjunctive_col(
       setting
+    ) |>
+    mutate(
+      across(
+        any_of(
+          c(
+            "i_enfants_adolescents",
+            "ii_adultes",
+            "iii_personnes_agees",
+            "a_enfants_adolescents_nutrition_activite_physique",
+            "b_personnes_agees_nutrition_activite_physique",
+            "c_enfants_adolescents_sante_psychique",
+            "d_personnes_agees_sante_psychique"
+          )
+        ),
+        ~ ifelse(is.na(.x), "Non", "Oui")
+      )
     )
+
 
 }

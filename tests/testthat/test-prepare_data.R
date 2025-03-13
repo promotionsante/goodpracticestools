@@ -47,36 +47,36 @@ test_that("prepare_data works", {
           "Information au public",
           "Policy"
         ),
-        i_enfants_adolescents = c(NA, "X", "X", NA, "X"),
-        ii_adultes = c(NA, NA, NA, NA, NA),
-        iii_personnes_agees = c("X", NA, "X", "X", "X"),
+        i_enfants_adolescents = c("Non", "Oui", "Oui", "Non", "Oui"),
+        ii_adultes = c("Non", "Non", "Non", "Non", "Non"),
+        iii_personnes_agees = c("Oui", "Non", "Oui", "Oui", "Oui"),
         a_enfants_adolescents_nutrition_activite_physique = c(
-          NA_character_,
-          NA_character_,
-          NA_character_,
-          NA_character_,
-          NA_character_
+          "Non",
+          "Non",
+          "Non",
+          "Non",
+          "Non"
         ),
         b_personnes_agees_nutrition_activite_physique = c(
-          NA_character_,
-          NA_character_,
-          NA_character_,
-          NA_character_,
-          NA_character_
+          "Non",
+          "Non",
+          "Non",
+          "Non",
+          "Non"
         ),
         c_enfants_adolescents_sante_psychique = c(
-          NA_character_,
-          NA_character_,
-          NA_character_,
-          NA_character_,
-          NA_character_
+          "Non",
+          "Non",
+          "Non",
+          "Non",
+          "Non"
         ),
         d_personnes_agees_sante_psychique = c(
-          NA_character_,
-          NA_character_,
-          NA_character_,
-          NA_character_,
-          NA_character_
+          "Non",
+          "Non",
+          "Non",
+          "Non",
+          "Non"
         ),
         theme_activite_physique = c(
           "Oui",
