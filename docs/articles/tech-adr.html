@@ -105,11 +105,51 @@
     
     
 <div class="section level2">
+<h2 id="adr002-management-of-external-model-dependencies-in-ci">ADR002: Management of external model dependencies in CI<a class="anchor" aria-label="anchor" href="#adr002-management-of-external-model-dependencies-in-ci"></a>
+</h2>
+<div class="section level4">
+<h4 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
+</h4>
+<p>Contrary to the initial intention, we cannot have the full CI process
+because, in the vignettes of the package and unit tests, we call the NLP
+model <strong>SpaCy</strong> (Python) and the LLM
+<strong>Ollama</strong>. While this works well locally, it requires
+additional configuration to work properly in the CI (GitHub
+workflow).</p>
+</div>
+<div class="section level4">
+<h4 id="decision">Decision<a class="anchor" aria-label="anchor" href="#decision"></a>
+</h4>
+<p>A code coverage report and vignettes are generated locally and
+included in the <code>pkgdown</code> site before each push to the
+<code>main</code> branch of the GitHub repository. The
+<code>pkgdown</code> site is then deployed based on this local
+build.</p>
+<p>Unit tests that involve Python models are marked with
+<code>skip_on_ci()</code>, and vignettes are not built during
+<code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code> in the CI. However, everything is run and
+verified locally before pushing to the GitHub repo.</p>
+<p>Instructions for this process are included in the file
+<code>dev/check_and_config_before_merge.R</code>.</p>
+</div>
+<div class="section level4">
+<h4 id="risks">Risks<a class="anchor" aria-label="anchor" href="#risks"></a>
+</h4>
+<ul>
+<li><p>There is a risk of manual build steps being forgotten before
+pushing</p></li>
+<li><p>By not running these tests in the CI, potential compatibility
+issues for some operating systems (notably Windows and Linux) may go
+undetected, as development is locally done on macOS</p></li>
+</ul>
+</div>
+</div>
+<div class="section level2">
 <h2 id="adr001-management-of-two-languages-fr-and-de-in-data-analysis">ADR001: Management of two languages (FR and DE) in data
 analysis<a class="anchor" aria-label="anchor" href="#adr001-management-of-two-languages-fr-and-de-in-data-analysis"></a>
 </h2>
 <div class="section level4">
-<h4 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
+<h4 id="background-1">Background<a class="anchor" aria-label="anchor" href="#background-1"></a>
 </h4>
 <p>The HTML overview must be available in two languages (French and
 German) because the recipients in the Swiss cantons speak one of these
@@ -126,7 +166,7 @@ two analyses were not strictly identical, indicating differences in the
 raw data.</em></p>
 </div>
 <div class="section level4">
-<h4 id="decision">Decision<a class="anchor" aria-label="anchor" href="#decision"></a>
+<h4 id="decision-1">Decision<a class="anchor" aria-label="anchor" href="#decision-1"></a>
 </h4>
 <p>The analyses (graphs, factor analyses, classification, interpretation
 of classes) will be carried out using <strong>only the French raw
@@ -137,7 +177,7 @@ French raw data on one side and the German raw data on the other, in
 order to avoid the complexity of translation at this stage.</p>
 </div>
 <div class="section level4">
-<h4 id="risks">Risks<a class="anchor" aria-label="anchor" href="#risks"></a>
+<h4 id="risks-1">Risks<a class="anchor" aria-label="anchor" href="#risks-1"></a>
 </h4>
 <ul>
 <li><p>There may be poor translation in German for statistical
