@@ -24,7 +24,6 @@ Imports:
     tm
 Suggests: 
     knitr,
-    pkgload,
     rmarkdown,
     stringi,
     testthat (>= 3.0.0)
