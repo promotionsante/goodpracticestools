@@ -45,6 +45,15 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: Install spaCy and spaCyR
+        run: |
+          sudo apt-get update
+          sudo apt-get install python3-pip python3-dev
+          pip3 install spacy
+          python3 -m spacy download fr_core_news_sm
+          Rscript -e "install.packages('spacyr')"
+          Rscript -e "library(spacyr); spacy_install()"
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
