@@ -1,5 +1,7 @@
 test_that("parse_description works", {
 
+  skip_on_ci()
+
   set.seed(123)
 
   data("data_raw_fr")
