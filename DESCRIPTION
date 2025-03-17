@@ -11,16 +11,22 @@ Depends:
     R (>= 3.5)
 Imports: 
     dplyr,
+    FactoMineR,
     glue,
     janitor,
+    purrr,
     rlang,
+    spacyr,
+    stringr,
+    tibble,
     tidyr,
-    tidyselect
+    tidyselect,
+    tm
 Suggests: 
     knitr,
     pkgload,
     rmarkdown,
-    stringr,
+    stringi,
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr

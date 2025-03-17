@@ -1,5 +1,7 @@
 test_that("prepare_data works", {
 
+  set.seed(123)
+
   data("data_raw_fr")
 
   extract_data_raw_fr <- data_raw_fr |>
@@ -21,7 +23,10 @@ test_that("prepare_data works", {
     )
 
   expect_equal(
-    object = prepare_data(data = extract_data_raw_fr),
+    object = prepare_data(
+      data = extract_data_raw_fr,
+      nb_min_word_in_desc = 4
+    ),
     expected = structure(
       list(
         fiche_d_informations_id =
@@ -32,13 +37,6 @@ test_that("prepare_data works", {
           "find help",
           "Webinaires pour le travail communal dans le domaine du vieillissement",
           "Plans directeurs cantonaux - Environnement propice à l’activité physique"
-        ),
-        description = c(
-          "Le \"Forum pour les questions liées à la vieillesse\" est un forum pour les questions liées à la vieillesse accompagne et conseille le département de la santé et des affaires sociales. En tant que commission d'accompagnement, il prend en compte les demandes de l'extérieur, les transmet à l'Office Vieillesse et Famille et, inversement, prend en compte les demandes pour le travail sur place.",
-          "L'aperçu contient des offres sous forme de projets, d'ateliers et de matériel pédagogique axés sur le renforcement de la santé physique et psychique. L'objectif est d'avoir une vue d'ensemble des offres cantonales et régionales qui soutiennent les écoles de Bâle-Campagne dans la mise en œuvre du programme scolaire.",
-          "Trouver des offres de conseil et de soutien adaptées dans le domaine de la santé et du social peut souvent être une tâche exigeante et frustrante qui prend beaucoup de temps. Le répertoire en ligne « find help » du Forum pour la santé psychique de la Suisse orientale offre un soutien dans ce domaine. Une fonction de recherche complète permet de trouver des offres de conseil et de soutien dans le domaine de la santé et du social à l'aide de mots-clés, du lieu de résidence et d'autres filtres. Seules les offres qui sont effectivement disponibles pour le lieu de résidence indiqué sont affichées. Le répertoire a été mis en place en collaboration avec plusieurs cantons et comprend déjà plus de 4000 offres vérifiées et est intégré à plus de 30 sites web. La plate-forme « find help » utilisée en commun a déjà permis de remplacer de nombreux répertoires gérés individuellement.",
-          "Les professionnels actifs au niveau communal sont informés par de brefs webinaires sur des thèmes relatifs à la prévention et à la promotion de la santé chez les personnes âgées. Ils découvrent des exemples de bonnes pratiques et se mettent en réseau.\r\n",
-          "La recherche a montré qu'un environnement propice à l'activité physique incite les gens à bouger davantage. Cette connaissance doit être exploitée et ancrée dans les plans directeurs cantonaux. Pour ce faire, les directions cantonales de la santé se sont mises en réseau avec la personne responsable du plan directeur dans le canton et ont clarifié de quelle manière elles pourraient être impliquées dans le prochain processus de révision. Idéalement, cela devrait se faire au début de ce processus et pas seulement lors de la prise de position publique. Promotion Santé Suisse accompagne les directions de la santé intéressées."
         ),
         niveau = c(
           "Policy",
@@ -168,6 +166,20 @@ test_that("prepare_data works", {
           "Non",
           "Non",
           "Oui"
+        ),
+        desc_offre = c(
+          0,
+          2,
+          4,
+          0,
+          0
+        ),
+        desc_santé = c(
+          1,
+          1,
+          3,
+          1,
+          3
         )
       ),
       row.names = c(NA, -5L),
