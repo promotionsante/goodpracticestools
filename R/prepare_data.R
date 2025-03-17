@@ -1,6 +1,7 @@
 #' Prepare raw data for statistical data analysis
 #'
 #' @param data Data frame. Raw data about projects.
+#' @param nb_min_word_in_desc Integer. Minimum number of occurences to keep a word.
 #'
 #' @importFrom dplyr mutate across any_of
 #'
@@ -13,7 +14,8 @@
 #'    data = data_raw_fr
 #' )
 prepare_data <- function(
-    data
+    data,
+    nb_min_word_in_desc = 10
 ) {
 
   check_expected_col(
@@ -47,7 +49,9 @@ prepare_data <- function(
         ),
         ~ ifelse(is.na(.x), "Non", "Oui")
       )
+    ) |>
+    parse_description(
+      nb_min_word = nb_min_word_in_desc
     )
-
 
 }

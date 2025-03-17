@@ -53,21 +53,47 @@ head(data_raw_de) |>
 
 ## How to prepare data for statistical analysis
 
-Only **French data** is used for the statistical analysis (see ADR X).
+Only **French data** is used for the statistical analysis (see [ADR001](https://promotionsante.github.io/goodpracticestools/articles/tech-adr.html#adr001-management-of-two-languages-fr-and-de-in-data-analysis)).
 
 The preparation steps are as follows:
 
-- Verify that the expected columns are present
-- Retain only the mandatory columns
-- Clean column names and use more explicit ones for certain columns
-- For the `Thème`, `Groupe cible`, and `Setting` columns, which contain multiple values per cell, convert them into disjunctive columns
-- Replace missing values (`NA`) in columns I, II, III and A, B, C, D.
+-   Verify that the expected columns are present
+-   Retain only the mandatory columns
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("figures/prep_step1.png")
+```
+
+-   Clean column names and use more explicit ones for certain columns
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("figures/prep_step2.png")
+```
+
+-   For the `Thème`, `Groupe cible`, and `Setting` columns, which contain multiple values per cell, convert them into disjunctive columns
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("figures/prep_step3.png")
+```
+
+-   Replace missing values (`NA`) in columns I, II, III and A, B, C, D
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("figures/prep_step4.png")
+```
+
+-   Parse the "description" column by (with lemmatization and after removing French stopwords) using the spaCy NLP system - see [{spacyr}](https://spacyr.quanteda.io/) for more details
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("figures/prep_step5.png")
+```
 
 These steps are implemented in the function `prepare_data()`:
 
-```{r}
+```{r, warning=FALSE}
 data_fr <- prepare_data(
-  data = data_raw_fr
+  data = data_raw_fr,
+  nb_min_word_in_desc = 30
 )
 ```
 
@@ -87,7 +113,8 @@ data_fr |>
     d_personnes_agees_sante_psychique, 
     starts_with("theme"), 
     starts_with("groupe_cible"),
-    starts_with("setting")
+    starts_with("setting"),
+    starts_with("desc")
   ) |> 
   head() |> 
   kable()

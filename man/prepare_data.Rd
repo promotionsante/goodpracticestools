@@ -4,10 +4,12 @@
 \alias{prepare_data}
 \title{Prepare raw data for statistical data analysis}
 \usage{
-prepare_data(data)
+prepare_data(data, nb_min_word_in_desc = 10)
 }
 \arguments{
 \item{data}{Data frame. Raw data about projects.}
+
+\item{nb_min_word_in_desc}{Integer. Minimum number of occurences to keep a word.}
 }
 \value{
 Data frame ready for analysis
