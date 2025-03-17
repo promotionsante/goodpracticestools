@@ -46,4 +46,4 @@ jobs:
 
       - name: Run devtools::check without vignettes
         run: |
-          R -e 'devtools::check(vignettes = FALSE, error_on = "error")'
+          Rscript 'devtools::check(vignettes = FALSE, error_on = "error")'
