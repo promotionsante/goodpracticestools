@@ -1,18 +1,15 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+name: R-CMD-check.yaml
+
+permissions: read-all
+
 on:
   push:
     branches: [main, master]
   pull_request:
 
-name: R-CMD-check.yaml
-
-permissions: read-all
-
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
-
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
@@ -45,7 +42,29 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - name: Install spaCy and spaCyR
+      # Install spaCy and spaCyR for macOS
+      - name: Install spaCy and spaCyR (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install python
+          pip3 install spacy
+          python3 -m spacy download fr_core_news_sm
+          Rscript -e "install.packages('spacyr')"
+          Rscript -e "library(spacyr); spacy_install()"
+
+      # Install spaCy and spaCyR for Windows
+      - name: Install spaCy and spaCyR (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          choco install python
+          pip install spacy
+          python -m spacy download fr_core_news_sm
+          Rscript -e "install.packages('spacyr')"
+          Rscript -e "library(spacyr); spacy_install()"
+
+      # Install spaCy and spaCyR for Ubuntu
+      - name: Install spaCy and spaCyR (Ubuntu)
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install python3-pip python3-dev
