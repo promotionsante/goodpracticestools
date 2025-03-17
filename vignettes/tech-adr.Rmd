@@ -14,6 +14,26 @@ knitr::opts_chunk$set(
 )
 ```
 
+## ADR002: Management of external model dependencies in CI
+
+#### Background
+
+Contrary to the initial intention, we cannot have the full CI process because, in the vignettes of the package and unit tests, we call the NLP model **SpaCy** (Python) and the LLM **Ollama**. While this works well locally, it requires additional configuration to work properly in the CI (GitHub workflow).
+
+#### Decision
+
+A code coverage report and vignettes are generated locally and included in the `pkgdown` site before each push to the `main` branch of the GitHub repository. The `pkgdown` site is then deployed based on this local build. 
+
+Unit tests that involve Python models are marked with `skip_on_ci()`, and vignettes are not built during `devtools::check()` in the CI. However, everything is run and verified locally before pushing to the GitHub repo.
+
+Instructions for this process are included in the file `dev/check_and_config_before_merge.R`. 
+
+#### Risks
+
+- There is a risk of manual build steps being forgotten before pushing
+
+- By not running these tests in the CI, potential compatibility issues for some operating systems (notably Windows and Linux) may go undetected, as development is locally done on macOS
+
 ## ADR001: Management of two languages (FR and DE) in data analysis
 
 #### Background
@@ -32,6 +52,6 @@ The analyses (graphs, factor analyses, classification, interpretation of classes
 
 #### Risks
 
--   There may be poor translation in German for statistical analyses
+- There may be poor translation in German for statistical analyses
 
--   The German results may not align perfectly with the DE raw data
+- The German results may not align perfectly with the DE raw data
