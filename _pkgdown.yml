@@ -18,3 +18,5 @@ navbar:
       menu:
       - text: Architecture Decisions Records
         href: articles/tech-adr.html
+      - text: Coverage report
+        href: articles/coverage-report.html
