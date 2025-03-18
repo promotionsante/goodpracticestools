@@ -15,10 +15,12 @@
 <url><loc>/reference/data_fr.html</loc></url>
 <url><loc>/reference/data_raw_de.html</loc></url>
 <url><loc>/reference/data_raw_fr.html</loc></url>
+<url><loc>/reference/get_distrib_level_data.html</loc></url>
 <url><loc>/reference/get_distrib_type_data.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
 <url><loc>/reference/keep_mandatory_col.html</loc></url>
 <url><loc>/reference/parse_description.html</loc></url>
+<url><loc>/reference/plot_distrib_level.html</loc></url>
 <url><loc>/reference/plot_distrib_type.html</loc></url>
 <url><loc>/reference/prepare_data.html</loc></url>
 </urlset>

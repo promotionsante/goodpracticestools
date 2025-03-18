@@ -9,13 +9,13 @@ test_that("prepare_data works", {
   extract_data_raw_fr <- data_raw_fr |>
     dplyr::select(
       c(
-        "Fiche d\xE2\x80\x99informations ID",
+        "Fiche d\u2019informations ID",
         "Nom",
         "Description",
         "Niveau",
         "I", "II", "III",
         "A", "B", "C", "D",
-        "Th\xC3\xA8me",
+        "Th\u00e8me",
         "Groupe cible",
         "Setting"
       )

@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, warning=FALSE, message=FALSE}
-library(goodpracticestools)
+# library(goodpracticestools)
+pkgload::load_all()
 ```
 
 ## Prepared data 
@@ -58,6 +59,40 @@ get_distrib_type_data(
 plot_distrib_type(
   title_font_size = 16, 
   text_font_size = 8.5, 
+  language = "de"
+)
+```
+
+## How to explore the distribution of projects by level
+
+The projects are linked to one or more of these levels:
+
+- Policy
+- Networking
+- Public Information
+- Intervention
+
+The `plot_distrib_level()` function displays the distribution of observations across one of these levels.
+
+```{r, fig.width=6, fig.height=4, fig.align='center'}
+get_distrib_level_data(
+  data = data_fr
+) |>
+plot_distrib_level(
+  title_font_size = 16, 
+  text_font_size = 10
+)
+```
+
+The German version is also available:
+
+```{r, fig.width=6, fig.height=4, fig.align='center'}
+get_distrib_level_data(
+  data = data_fr
+) |>
+plot_distrib_level(
+  title_font_size = 16, 
+  text_font_size = 10, 
   language = "de"
 )
 ```

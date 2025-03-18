@@ -12,6 +12,7 @@ Depends:
 Imports: 
     dplyr,
     FactoMineR,
+    forcats,
     ggiraph,
     ggplot2,
     glue,
@@ -26,6 +27,7 @@ Imports:
     tm
 Suggests: 
     knitr,
+    pkgload,
     rmarkdown,
     stringi,
     testthat (>= 3.0.0)
