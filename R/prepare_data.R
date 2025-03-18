@@ -10,9 +10,7 @@
 #'
 #' @example
 #' data("data_raw_fr")
-#' prepare_data(
-#'    data = data_raw_fr
-#' )
+#' prepare_data(data = data_raw_fr)
 prepare_data <- function(
     data,
     nb_min_word_in_desc = 10

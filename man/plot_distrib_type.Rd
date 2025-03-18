@@ -7,7 +7,7 @@
 plot_distrib_type(
   data,
   color = "#c1e1ec",
-  font_family = "DIN Condensed",
+  font_family = "Roboto",
   title_font_size = "16px",
   text_font_size = "11px",
   language = c("fr", "de")

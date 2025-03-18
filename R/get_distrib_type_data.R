@@ -7,6 +7,7 @@
 #' @importFrom tidyselect everything
 #'
 #' @return Data frame. Number of "Oui" by column A/B/C/D
+#' @export
 get_distrib_type_data <- function(
     data
 ) {

@@ -8,14 +8,14 @@
 #' @param language Character. "fr" or "de".
 #'
 #' @importFrom highcharter highchart hc_chart hc_title hc_xAxis hc_yAxis hc_add_series hc_annotations hc_tooltip hcaes
-#' @importFrom showtext font_add showtext_auto
 #' @importFrom dplyr mutate
 #'
 #' @return An interactive plot
+#' @export
 plot_distrib_type <- function(
     data,
     color = "#c1e1ec",
-    font_family = "DIN Condensed",
+    font_family = "Roboto",
     title_font_size = "16px",
     text_font_size = "11px",
     language = c("fr", "de")
@@ -25,17 +25,6 @@ plot_distrib_type <- function(
 
   text_types <- trad_plot_distrib_type[[language]]$text_types
   title <- trad_plot_distrib_type[[language]]$title
-
-  if (font_family == "DINPro") {
-    font_add(
-      family = "DINPro",
-      regular = system.file(
-        "font/DINPro.otf",
-        package = "goodpracticestools"
-      )
-    )
-    showtext_auto()
-  }
 
   data <- data |>
     mutate(color = color)
@@ -79,11 +68,11 @@ plot_distrib_type <- function(
         labels =
           list(
             list(
-              point = list(x = 1, y = 2.3, xAxis = 0, yAxis = 0),
+              point = list(x = 1, y = 2.4, xAxis = 0, yAxis = 0),
               text = text_types[["nutrition"]]
             ),
             list(
-              point = list(x = 2, y = 2.3, xAxis = 0, yAxis = 0),
+              point = list(x = 2, y = 2.4, xAxis = 0, yAxis = 0),
               text = text_types[["mental"]]
             ),
             list(

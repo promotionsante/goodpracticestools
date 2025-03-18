@@ -15,19 +15,19 @@ vec_mandatory_col <- c(
 trad_plot_distrib_type <- list(
   fr = list(
     text_types = list(
-      "nutrition" = "Nutrition et activité physique",
-      "mental" = "Santé psychique",
+      "nutrition" = "Nutrition et activit\u00e9 physique",
+      "mental" = "Sant\u00e9 psychique",
       "kids" = "Enfants/adolescents",
-      "seniors" = "Personnes âgées"
+      "seniors" = "Personnes \u00e2g\u00e9es"
     ),
-    title = "Répartition des types de projets"
+    title = "R\u00e9partition des types de projets"
   ),
   de = list(
     text_types = list(
-      "nutrition" = "Ernährung und körperliche Aktivität",
+      "nutrition" = "Ern\u00e4hrung und k\u00f6rperliche Aktivit\u00e4t",
       "mental" = "Psychische Gesundheit",
       "kids" = "Kinder/Jugendliche",
-      "seniors" = "Ältere Menschen"
+      "seniors" = "\u00c4ltere Menschen"
     ),
     title = "Verteilung der Projekttypen"
   )
