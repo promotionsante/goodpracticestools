@@ -9,7 +9,7 @@ plot_distrib_level(
   color = "#c1e1ec",
   title_font_size = 16,
   text_font_size = 11,
-  font_family = "Arial",
+  font_family = "DIN Pro",
   language = c("fr", "de")
 )
 }
