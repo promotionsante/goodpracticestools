@@ -36,3 +36,5 @@ the package documentation to help you use the different features:
   analysis](https://promotionsante.github.io/goodpracticestools/articles/how-to-prepare-data-for-statistical-analysis.html)
 - [How to explore the projects
   graphically](https://promotionsante.github.io/goodpracticestools/articles/how-to-explore-the-projects-graphically.html)
+- [How to obtain a typology of
+  projects](https://promotionsante.github.io/goodpracticestools/articles/how-to-obtain-a-typology-of-projects.html)

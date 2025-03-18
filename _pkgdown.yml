@@ -14,6 +14,8 @@ navbar:
       - text: Data analysis
       - text: How to explore the projects graphically
         href: articles/how-to-explore-the-projects-graphically.html
+      - text: How to obtain a typology of projects
+        href: articles/how-to-obtain-a-typology-of-projects.html
 
     tech:
       text: Tech articles
