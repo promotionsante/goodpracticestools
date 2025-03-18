@@ -8,10 +8,12 @@ navbar:
       menu:
       - text: -------
       - text: Data preparation
-      - text: How to prepare data for statistical analysi
+      - text: How to prepare data for statistical analysis
         href: articles/how-to-prepare-data-for-statistical-analysis.html
       - text: -------
       - text: Data analysis
+      - text: How to explore the projects graphically
+        href: articles/how-to-explore-the-projects-graphically.html
 
     tech:
       text: Tech articles

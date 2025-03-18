@@ -1,0 +1,63 @@
+---
+title: "How to explore the projects graphically"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{how-to-explore-the-projects-graphically}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, warning=FALSE, message=FALSE}
+library(goodpracticestools)
+```
+
+## Prepared data 
+
+The data was prepared using the `prepare_data()` function. See the article **"How to prepare data for statistical analysis"** for more details.
+
+```{r}
+data("data_fr")
+```
+
+## How to explore the distribution of projects by type A / B / C / D
+
+The projects are linked to one or more of these types:
+
+A - Nutrition focus for children/teenagers
+B - Nutrition focus for the elderly
+C - Mental health focus for children/teenagers
+D - Mental health focus for the elderly
+
+The `plot_distrib_type()` function displays the distribution of observations across one of these types.
+
+```{r, fig.width=6, fig.height=6, fig.align='center'}
+get_distrib_type_data(
+  data = data_fr
+) |>
+plot_distrib_type(
+  title_font_size = "18px", 
+  text_font_size = "15px"
+)
+```
+
+*Note: Some projects are associated with more than one type. Others are not associated with any type.*
+
+The German version is also available:
+
+```{r, fig.width=6, fig.height=6, fig.align='center'}
+get_distrib_type_data(
+  data = data_fr
+) |>
+plot_distrib_type(
+  title_font_size = "18px", 
+  text_font_size = "15px", 
+  language = "de"
+)
+```

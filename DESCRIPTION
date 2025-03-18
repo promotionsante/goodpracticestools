@@ -13,6 +13,7 @@ Imports:
     dplyr,
     FactoMineR,
     glue,
+    highcharter,
     janitor,
     purrr,
     rlang,
