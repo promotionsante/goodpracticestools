@@ -23,25 +23,8 @@ plot_distrib_type <- function(
 
   language <- match.arg(language)
 
-  if (language == "fr") {
-    text_types <- list(
-      "nutrition" = "Nutrition et activité physique",
-      "mental" = "Santé psychique",
-      "kids" = "Enfants/adolescents",
-      "seniors" = "Personnes âgées"
-    )
-    title <- "Répartition des types de projets"
-  }
-
-  if (language == "de") {
-    text_types <- list(
-      "nutrition" = "Ernährung und körperliche Aktivität",
-      "mental" = "Psychische Gesundheit",
-      "kids" = "Kinder/Jugendliche",
-      "seniors" = "Ältere Menschen"
-    )
-    title <- "Verteilung der Projekttypen"
-  }
+  text_types <- trad_plot_distrib_type[[language]]$text_types
+  title <- trad_plot_distrib_type[[language]]$title
 
   if (font_family == "DINPro") {
     font_add(
