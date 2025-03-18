@@ -35,10 +35,6 @@ plot_distrib_type <- function(
   text_types <- trad_plot_distrib_type[[language]]$text_types
   title <- trad_plot_distrib_type[[language]]$title
 
-  if (!(font_family %in% system_fonts()$family)) {
-    font_family <- NULL
-  }
-
   p <- ggplot(data, aes(x = x, y = y, size = size, color = color)) +
     geom_point_interactive(
       aes(tooltip = paste(type, "<br>", size)),
@@ -52,15 +48,32 @@ plot_distrib_type <- function(
       range = c(20, 50)
     ) +
     ggtitle(title) +
-    theme_void() +
-    theme(
-      plot.title = element_text(
-        family = font_family,
-        size = title_font_size,
-        hjust = 0.5
-      ),
-      legend.position = "none"
-    )
+    theme_void()
+
+  if (font_family %in% system_fonts()$family) {
+
+    p <- p +
+      theme(
+        plot.title = element_text(
+          family = font_family,
+          size = title_font_size,
+          hjust = 0.5
+        ),
+        legend.position = "none"
+      )
+
+  } else {
+
+    p <- p +
+      theme(
+        plot.title = element_text(
+          size = title_font_size,
+          hjust = 0.5
+        ),
+        legend.position = "none"
+      )
+
+  }
 
   annotations <- data.frame(
     x = c(xmin, xmax, 0, 0),
@@ -73,13 +86,26 @@ plot_distrib_type <- function(
     )
   )
 
-  p <- p + geom_text(
-    data = annotations,
-    aes(x = x, y = y, label = label),
-    family = font_family,
-    size = text_font_size / 3,
-    color = "black"
-  )
+  if (font_family %in% system_fonts()$family) {
+
+    p <- p + geom_text(
+      data = annotations,
+      aes(x = x, y = y, label = label),
+      family = font_family,
+      size = text_font_size / 3,
+      color = "black"
+    )
+
+  } else {
+
+    p <- p + geom_text(
+      data = annotations,
+      aes(x = x, y = y, label = label),
+      size = text_font_size / 3,
+      color = "black"
+    )
+
+  }
 
   girafe(ggobj = p)
 

@@ -29,10 +29,6 @@ plot_distrib_level <- function(
   text_types <- trad_plot_distrib_level[[language]]$text_types
   title <- trad_plot_distrib_level[[language]]$title
 
-  if (!(font_family %in% system_fonts()$family)) {
-    font_family <- NULL
-  }
-
   data_language_ok <- data |>
     mutate(
       niveau = case_when(
@@ -56,19 +52,41 @@ plot_distrib_level <- function(
       fill = color
     ) +
     ggtitle(title) +
-    theme_minimal() +
-    theme(
-      plot.title = element_text(
-        family = font_family,
-        size = title_font_size,
-        hjust = 0.5
-      ),
-      axis.title = element_blank(),
-      axis.text = element_text(
-        size = text_font_size
-      ),
-      legend.position = "none"
-    )
+    theme_minimal()
+
+  if (font_family %in% system_fonts()$family) {
+
+    p <- p +
+      theme(
+        plot.title = element_text(
+          family = font_family,
+          size = title_font_size,
+          hjust = 0.5
+        ),
+        axis.title = element_blank(),
+        axis.text = element_text(
+          size = text_font_size,
+          family = font_family
+        ),
+        legend.position = "none"
+      )
+
+  } else {
+
+    p <- p +
+      theme(
+        plot.title = element_text(
+          size = title_font_size,
+          hjust = 0.5
+        ),
+        axis.title = element_blank(),
+        axis.text = element_text(
+          size = text_font_size
+        ),
+        legend.position = "none"
+      )
+
+  }
 
   girafe(ggobj = p)
 
