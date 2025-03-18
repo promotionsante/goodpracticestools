@@ -48,7 +48,7 @@ plot_distrib_type(
 )
 ```
 
-**Note: Some projects are associated with more than one type. Others are not associated with any type.**
+*Note: Some projects are associated with more than one type. Others are not associated with any type.*
 
 The German version is also available:
 
