@@ -7,10 +7,14 @@
 plot_distrib_type(
   data,
   color = "#c1e1ec",
-  font_family = "Roboto",
-  title_font_size = "16px",
-  text_font_size = "11px",
-  language = c("fr", "de")
+  title_font_size = 16,
+  text_font_size = 11,
+  font_family = "Arial",
+  language = c("fr", "de"),
+  xmin = 1,
+  xmax = 2,
+  ymin = 1.3,
+  ymax = 2
 )
 }
 \arguments{
@@ -18,13 +22,21 @@ plot_distrib_type(
 
 \item{color}{Character. Color for the bubbles.}
 
-\item{font_family}{Character. Font family.}
+\item{title_font_size}{Integer. Font size for the title.}
 
-\item{title_font_size}{Character. Font size for the title.}
+\item{text_font_size}{Integer. Font size for the texts.}
 
-\item{text_font_size}{Character. Font size for the texts.}
+\item{font_family}{Character.}
 
 \item{language}{Character. "fr" or "de".}
+
+\item{xmin}{Integer.}
+
+\item{xmax}{Integer.}
+
+\item{ymin}{Integer.}
+
+\item{ymax}{Integer.}
 }
 \value{
 An interactive plot

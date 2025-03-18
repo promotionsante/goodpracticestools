@@ -42,8 +42,8 @@ get_distrib_type_data(
   data = data_fr
 ) |>
 plot_distrib_type(
-  title_font_size = "18px", 
-  text_font_size = "15px"
+  title_font_size = 16, 
+  text_font_size = 10
 )
 ```
 
@@ -56,8 +56,8 @@ get_distrib_type_data(
   data = data_fr
 ) |>
 plot_distrib_type(
-  title_font_size = "18px", 
-  text_font_size = "15px", 
+  title_font_size = 16, 
+  text_font_size = 8.5, 
   language = "de"
 )
 ```

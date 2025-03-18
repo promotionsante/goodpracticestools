@@ -4,10 +4,18 @@
 \alias{get_distrib_type_data}
 \title{Get the data for the plot about the distribution of types}
 \usage{
-get_distrib_type_data(data)
+get_distrib_type_data(data, xmin = 1, xmax = 2, ymin = 1.3, ymax = 2)
 }
 \arguments{
 \item{data}{Data frame. Prepared data about projects.}
+
+\item{xmin}{Integer.}
+
+\item{xmax}{Integer.}
+
+\item{ymin}{Integer.}
+
+\item{ymax}{Integer.}
 }
 \value{
 Data frame. Number of "Oui" by column A/B/C/D

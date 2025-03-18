@@ -7,7 +7,7 @@ test_that("plot_distrib_type works", {
       data = data_fr
     ) |>
     plot_distrib_type(),
-    class = "highchart"
+    class = "girafe"
   )
 
 })

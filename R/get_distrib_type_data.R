@@ -1,6 +1,10 @@
 #' Get the data for the plot about the distribution of types
 #'
 #' @param data  Data frame. Prepared data about projects.
+#' @param xmin  Integer.
+#' @param xmax  Integer.
+#' @param ymin  Integer.
+#' @param ymax  Integer.
 #'
 #' @importFrom dplyr summarise across mutate case_when
 #' @importFrom tidyr pivot_longer
@@ -9,7 +13,11 @@
 #' @return Data frame. Number of "Oui" by column A/B/C/D
 #' @export
 get_distrib_type_data <- function(
-    data
+    data,
+    xmin = 1,
+    xmax = 2,
+    ymin = 1.3,
+    ymax = 2
 ) {
 
   data |>
@@ -38,8 +46,8 @@ get_distrib_type_data <- function(
       )
     ) |>
     mutate(
-      x = c(1, 1, 2, 2),
-      y = c(2, 1, 2, 1)
+      x = c(xmin, xmin, xmax, xmax),
+      y = c(ymax, ymin, ymax, ymin)
     )
 
 }

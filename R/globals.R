@@ -10,5 +10,5 @@ globalVariables(unique(c(
   # get_distrib_type_data:
   "a_enfants_adolescents_nutrition_activite_physique", "b_personnes_agees_nutrition_activite_physique", "c_enfants_adolescents_sante_psychique", "d_personnes_agees_sante_psychique",
   # plot_distrib_type:
-  "size", "x", "y"
+  "size", "x", "y", "label", "type"
 )))

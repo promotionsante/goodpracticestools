@@ -12,8 +12,9 @@ Depends:
 Imports: 
     dplyr,
     FactoMineR,
+    ggiraph,
+    ggplot2,
     glue,
-    highcharter,
     janitor,
     purrr,
     rlang,
