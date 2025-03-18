@@ -19,15 +19,13 @@ knitr::opts_chunk$set(
 pkgload::load_all()
 ```
 
-## Prepared data 
+## How to explore the distribution of projects by type A / B / C / D
 
-The data was prepared using the `prepare_data()` function. See the article **"How to prepare data for statistical analysis"** for more details.
+The data was prepared using the `prepare_data()` function. See the article [How to prepare data for statistical analysis](https://promotionsante.github.io/goodpracticestools/articles/how-to-prepare-data-for-statistical-analysis.html) for more details.
 
 ```{r}
 data("data_fr")
 ```
-
-## How to explore the distribution of projects by type A / B / C / D
 
 The projects are linked to one or more of these types:
 
@@ -65,6 +63,12 @@ plot_distrib_type(
 
 ## How to explore the distribution of projects by level
 
+The data was prepared using the `prepare_data()` function. See the article [How to prepare data for statistical analysis](https://promotionsante.github.io/goodpracticestools/articles/how-to-prepare-data-for-statistical-analysis.html) for more details.
+
+```{r}
+data("data_fr")
+```
+
 The projects are linked to one or more of these levels:
 
 - Policy
@@ -96,3 +100,8 @@ plot_distrib_level(
   language = "de"
 )
 ```
+
+## How to explore the raw data about the projects
+
+
+
