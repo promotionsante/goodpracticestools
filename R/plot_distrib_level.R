@@ -30,7 +30,7 @@ plot_distrib_level <- function(
   title <- trad_plot_distrib_level[[language]]$title
 
   if (!(font_family %in% system_fonts()$family)) {
-    font_family <- "Times"
+    font_family <- "Helvetica"
   }
 
   data_language_ok <- data |>

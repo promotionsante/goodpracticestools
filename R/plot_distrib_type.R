@@ -36,7 +36,7 @@ plot_distrib_type <- function(
   title <- trad_plot_distrib_type[[language]]$title
 
   if (!(font_family %in% system_fonts()$family)) {
-    family <- "Times"
+    family <- "Helvetica"
   }
 
   p <- ggplot(data, aes(x = x, y = y, size = size, color = color)) +
