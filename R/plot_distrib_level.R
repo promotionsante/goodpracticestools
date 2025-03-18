@@ -46,7 +46,8 @@ plot_distrib_level <- function(
       )
     )
 
-  p <- ggplot(data_language_ok, aes(x = niveau, y = n)) +
+  p <- ggplot(data = data_language_ok) +
+    aes(x = niveau, y = n) +
     geom_col_interactive(
       aes(tooltip = paste(niveau, "<br>", n)),
       fill = color

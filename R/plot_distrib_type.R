@@ -35,7 +35,8 @@ plot_distrib_type <- function(
   text_types <- trad_plot_distrib_type[[language]]$text_types
   title <- trad_plot_distrib_type[[language]]$title
 
-  p <- ggplot(data, aes(x = x, y = y, size = size, color = color)) +
+  p <- ggplot(data = data) +
+    aes(x = x, y = y, size = size, color = color) +
     geom_point_interactive(
       aes(tooltip = paste(type, "<br>", size)),
       shape = 21,

@@ -89,3 +89,15 @@ vec_medium_col <- list(
     "Setting"
   )
 )
+
+# plot_clusters
+trad_plot_clusters <- list(
+  fr = list(
+    text = "Plus de d\u00e9tails dans \'Explorer en d\u00e9tails les projets\'",
+    title = "Clusters de projets"
+  ),
+  de = list(
+    text = "Mehr Details unter \'Projekte im Detail erkunden\'",
+    title = "Projektcluster"
+  )
+)

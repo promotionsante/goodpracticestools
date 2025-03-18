@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, warning=FALSE, message=FALSE}
 # library(goodpracticestools)
 pkgload::load_all()
 ```
@@ -51,8 +51,26 @@ res_analysis <- get_clusters(
 
 ## How to plot the clusters of projects
 
-```{r}
+The `plot_clusters()` function then displays the factorial plane from the MCA with the representation of the clusters:
 
+```{r, fig.width=6, fig.height=4, fig.align='center'}
+plot_clusters(
+  res_analysis = res_analysis
+)
+```
+
+The German version is also available:
+
+```{r}
+data("data_raw_de")
+```
+
+```{r, fig.width=6, fig.height=4, fig.align='center'}
+plot_clusters(
+  res_analysis = res_analysis, 
+  data_raw_de = data_raw_de,
+  language = "de"
+)
 ```
 
 ## How to interpret the clusters of projects
