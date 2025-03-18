@@ -8,7 +8,7 @@ navbar:
       menu:
       - text: -------
       - text: Data preparation
-      - text: How to prepare data for statistical analysi
+      - text: How to prepare data for statistical analysis
         href: articles/how-to-prepare-data-for-statistical-analysis.html
       - text: -------
       - text: Data analysis
