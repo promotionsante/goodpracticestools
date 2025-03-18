@@ -13,9 +13,11 @@ Imports:
     dplyr,
     FactoMineR,
     glue,
+    highcharter,
     janitor,
     purrr,
     rlang,
+    showtext,
     spacyr,
     stringr,
     tibble,
@@ -24,6 +26,7 @@ Imports:
     tm
 Suggests: 
     knitr,
+    pkgload,
     rmarkdown,
     stringi,
     testthat (>= 3.0.0)

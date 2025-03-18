@@ -1,3 +1,13 @@
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
+test_that("plot_distrib_type works", {
+
+  data("data_fr")
+
+  expect_s3_class(
+    object = get_distrib_type_data(
+      data = data_fr
+    ) |>
+    plot_distrib_type(),
+    class = "highchart"
+  )
+
 })

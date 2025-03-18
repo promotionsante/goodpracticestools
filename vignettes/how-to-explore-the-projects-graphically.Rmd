@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, warning=FALSE, message=FALSE}
 # library(goodpracticestools)
 pkgload::load_all()
 ```
@@ -38,11 +38,27 @@ D - Mental health focus for the elderly
 
 The `plot_distrib_type()` function displays the distribution of observations across one of these types.
 
-```{r}
-plot_distrib_type(
+```{r, fig.width=6, fig.height=6, fig.align='center'}
+get_distrib_type_data(
   data = data_fr
+) |>
+plot_distrib_type(
+  title_font_size = "18px", 
+  text_font_size = "15px"
 )
 ```
 
-
 **Note: Some projects are associated with more than one type. Others are not associated with any type.**
+
+The German version is also available:
+
+```{r, fig.width=6, fig.height=6, fig.align='center'}
+get_distrib_type_data(
+  data = data_fr
+) |>
+plot_distrib_type(
+  title_font_size = "18px", 
+  text_font_size = "15px", 
+  language = "de"
+)
+```
