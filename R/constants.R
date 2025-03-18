@@ -55,4 +55,37 @@ trad_plot_distrib_level <- list(
   )
 )
 
+# show_raw_data
+vec_large_col <- list(
+  fr = c(
+    "Description",
+    "Principaux enseignements tir\u00e9s de la mise en \u0153uvre",
+    "Impact"
+  ),
+  de = c(
+    "Beschreibung",
+    "Wichtige Erkenntnisse aus der Umsetzung",
+    "Wirkung"
+  )
+)
 
+vec_medium_col <- list(
+  fr = c(
+    "Forces particuliers",
+    "Informations compl\u00e9mentaires",
+    "Groupes particuli\u00e8rement vuln\u00e9rables",
+    "Priorit\u00e9s",
+    "Multiplicateur-trice-s",
+    "Port\u00e9e",
+    "Setting"
+  ),
+  de = c(
+    "Besondere St\u00e4rken",
+    "Weiterf\u00fchrende Informationen",
+    "Besonders vulnerable Gruppen",
+    "Schwerpunkte",
+    "Multiplikatoren_innen",
+    "Reichweite",
+    "Setting"
+  )
+)

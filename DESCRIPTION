@@ -18,16 +18,17 @@ Imports:
     glue,
     janitor,
     purrr,
+    reactable,
     rlang,
     spacyr,
     stringr,
+    systemfonts,
     tibble,
     tidyr,
     tidyselect,
     tm
 Suggests: 
     knitr,
-    pkgload,
     rmarkdown,
     stringi,
     testthat (>= 3.0.0)

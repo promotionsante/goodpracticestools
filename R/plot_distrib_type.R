@@ -13,6 +13,7 @@
 #'
 #' @importFrom ggplot2 ggplot aes ggtitle theme_void theme element_text geom_text scale_size_continuous xlim ylim
 #' @importFrom ggiraph geom_point_interactive girafe
+#' @importFrom systemfonts system_fonts
 #'
 #' @return An interactive plot
 #' @export
@@ -33,6 +34,10 @@ plot_distrib_type <- function(
 
   text_types <- trad_plot_distrib_type[[language]]$text_types
   title <- trad_plot_distrib_type[[language]]$title
+
+  if (!(font_family %in% system_fonts()$family)) {
+    family <- "Times"
+  }
 
   p <- ggplot(data, aes(x = x, y = y, size = size, color = color)) +
     geom_point_interactive(

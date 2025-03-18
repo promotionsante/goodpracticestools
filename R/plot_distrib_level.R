@@ -11,6 +11,7 @@
 #' @importFrom forcats fct_reorder
 #' @importFrom ggplot2 ggplot aes ggtitle theme_minimal theme element_text element_blank
 #' @importFrom ggiraph geom_col_interactive girafe
+#' @importFrom systemfonts system_fonts
 #'
 #' @return An interactive plot
 #' @export
@@ -27,6 +28,10 @@ plot_distrib_level <- function(
 
   text_types <- trad_plot_distrib_level[[language]]$text_types
   title <- trad_plot_distrib_level[[language]]$title
+
+  if (!(font_family %in% system_fonts()$family)) {
+    family <- "Times"
+  }
 
   data_language_ok <- data |>
     mutate(

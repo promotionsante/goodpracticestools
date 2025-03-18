@@ -15,8 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, warning=FALSE, message=FALSE}
-# library(goodpracticestools)
-pkgload::load_all()
+library(goodpracticestools)
 ```
 
 ## How to explore the distribution of projects by type A / B / C / D
@@ -103,5 +102,27 @@ plot_distrib_level(
 
 ## How to explore the raw data about the projects
 
+```{r}
+data("data_raw_fr")
+```
 
+The function `show_raw_data()` allows displaying the raw data:
 
+```{r}
+show_raw_data(
+  data = data_raw_fr
+)
+```
+
+The German version is also available:
+
+```{r}
+data("data_raw_de")
+```
+
+```{r}
+show_raw_data(
+  data = data_raw_de, 
+  language = "de"
+)
+```
