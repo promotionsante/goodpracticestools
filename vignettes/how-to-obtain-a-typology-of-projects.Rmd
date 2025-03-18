@@ -15,5 +15,46 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(goodpracticestools)
+# library(goodpracticestools)
+pkgload::load_all()
 ```
+
+## How to explore the variability of the projects
+
+The data was prepared using the `prepare_data()` function. See the article [How to prepare data for statistical analysis](https://promotionsante.github.io/goodpracticestools/articles/how-to-prepare-data-for-statistical-analysis.html) for more details.
+
+```{r}
+data("data_fr")
+```
+
+The data are analyzed using **Multiple Correspondence Analysis** (MCA), a statistical method that helps explore and visualize relationships between several categorical variables. 
+
+In this analysis, the active variables are as follows: 
+
+- the A/B/C/D columns,
+- the level column, 
+- the theme columns, 
+- the target groups columns,  
+- and the settings columns. 
+
+MCA allows for the identification of underlying structures and associations between these variables, providing a clear view of the links and patterns present in the data. 
+
+Following the MCA, a **Hierarchical Clustering on Principal Components** (HCPC) is performed to further group similar observations and enhance the interpretation of the results.
+
+The `get_clusters()` function realizes the analysis:
+
+```{r}
+res_analysis <- get_clusters(
+  data = data_fr
+)
+```
+
+## How to plot the clusters of projects
+
+```{r}
+
+```
+
+## How to interpret the clusters of projects
+
+

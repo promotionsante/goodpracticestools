@@ -14,5 +14,7 @@ globalVariables(unique(c(
   # get_distrib_level_data:
   "niveau",
   # plot_distrib_level:
-  "n", "niveau"
+  "n", "niveau",
+  # get_clusters:
+  "a.enfants.adolescents.nutrition.activite.physique", "b.personnes.agees.nutrition.activite.physique", "c.enfants.adolescents.sante.psychique", "d.personnes.agees.sante.psychique", "fiche.d.informations.id"
 )))
