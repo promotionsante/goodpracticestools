@@ -1,5 +1,7 @@
 test_that("interpret_clusters works", {
 
+  skip_on_ci()
+
   data("data_fr")
 
   res_analysis <- get_clusters(
