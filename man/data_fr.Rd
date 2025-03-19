@@ -291,9 +291,6 @@ A data frame with 170 rows and 282 variables:
 \item{ desc_youp }{  numeric }
 }
 }
-\source{
-Source
-}
 \usage{
 data_fr
 }

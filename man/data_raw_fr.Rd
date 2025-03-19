@@ -45,9 +45,6 @@ A data frame with 170 rows and 36 variables:
 \item{ Priorités }{  character }
 }
 }
-\source{
-Source
-}
 \usage{
 data_raw_fr
 }
