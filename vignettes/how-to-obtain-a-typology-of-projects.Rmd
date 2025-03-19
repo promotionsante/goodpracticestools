@@ -85,14 +85,48 @@ The process is described in the diagram below:
 knitr::include_graphics("figures/llm.png")
 ```
 
-The `interpret_clusters()` function realizes these operations:
+The `interpret_clusters()` function realizes these operations. 
 
-```{r}
+```{r, eval=FALSE}
 res_interpret_clusters <- interpret_clusters(
   res_analysis = res_analysis
 )
 ```
 
+```{r, echo=FALSE}
+data("res_interpret_clusters")
+```
+
+It first returns the introduction and request text used to generate the prompt, as well as the prompt itself.
+
+```{r}
+cat(res_interpret_clusters$intro_llm)
+```
+
+```{r}
+cat(res_interpret_clusters$request_llm)
+```
+
+```{r}
+cat(res_interpret_clusters$res_prompt_llm)
+```
+
+Finally, it returns the interpretation of the clusters in French and German:
+
+```{r}
+cat(res_interpret_clusters$res_desc_llm_fr)
+```
+
+```{r}
+cat(res_interpret_clusters$res_desc_llm_de)
+```
+
+*To be included in an HTML report, the chunk parameter `results='asis'` must be used. This will produce the following result:*
+
+```{r, results='asis'}
+# results='asis' is used in this chunk
+cat(res_interpret_clusters$res_desc_llm_fr)
+```
 
 
 
