@@ -49,13 +49,13 @@ Après avoir analysé les données, les projets ont
 
   # define the request for the llm
   request_llm <- c("La desccription des projets est fournie dans la section
-'Données'. Sur la base de ces informations :
+'Donn\u00e9es'. Sur la base de ces informations :
 1. Fourni une description de chaque groupe de projets, sous une forme littérale;
 2. Donne un nom à ce groupe
 Structure ta réponse comme cela:
 Cluster X : [Ta recommandation de nom ici]
 [Ton résumé des caractéristiques du groupe ici];
-Évite le terme 'Promotion' dans tes recommandations de noms et privilégie plutôt le terme de 'Prévention de la santé'.
+Évite le terme 'Promotion' dans tes recommandations de noms et privilégie plutôt le terme de 'Pr\u00e9vention de la sant\u00e9'.
 Si le groupe de projets est dédié à un type de publics (enfants, adolescents, jeunes adultes, personnes âgées),
 fais le figurer dans le nom du groupe à chaque fois.") |>
     str_replace_all("\n", " ")
@@ -73,10 +73,10 @@ fais le figurer dans le nom du groupe à chaque fois.") |>
   )
 
   res_prompt_llm <- res_prompt_llm |>
-    str_replace_all("# Task", "# Tâche") |>
-    str_replace_all("# Data", "# Données") |>
+    str_replace_all("# Task", "# T\u00e2che") |>
+    str_replace_all("# Data", "# Donn\u00e9es") |>
     str_replace_all("## Group", "## Cluster de projets") |>
-    str_replace_all("Observations in this group are \\*more\\* likely to be associated with the following response categories. In this output, the name of the variable precedes the category that characterises our observations by its strong association:", "Les projets de ce cluster sont \\*plus\\* susceptibles d'être associés aux caractéristiques suivantes. Dans cette sortie, le nom de la variable précède la catégorie qui caractérise nos observations par sa forte association :") |>
+    str_replace_all("Observations in this group are \\*more\\* likely to be associated with the following response categories. In this output, the name of the variable precedes the category that characterises our observations by its strong association:", "Les projets de ce cluster sont \\*plus\\* susceptibles d\'\u00eatre associ\u00e9s aux caract\u00e9ristiques suivantes. Dans cette sortie, le nom de la variable pr\u00e9c\u00e8de la cat\u00e9gorie qui caract\u00e9rise nos observations par sa forte association :") |>
     str_replace_all("Observations in this group have quite \\*high\\* values for the following variables:", "Les projets de ce cluster sont \\*plus\\* susceptibles de contenir dans leur description les mots suivants:")
 
   # run the llm in FR
@@ -93,7 +93,7 @@ fais le figurer dans le nom du groupe à chaque fois.") |>
   # run the llm in DE
   res_desc_llm_de <- generate(
     model = "llama3.1",
-    prompt = paste0("Peux-tu me traduire tout le texte suivant en allemand en gardant la même structure :", res_desc_llm_fr),
+    prompt = paste0("Peux-tu me traduire tout le texte suivant en allemand en gardant la m\u00eame structure :", res_desc_llm_fr),
     output = "text"
   )
 
