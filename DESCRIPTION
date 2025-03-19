@@ -17,6 +17,8 @@ Imports:
     ggplot2,
     glue,
     janitor,
+    NaileR,
+    ollamar,
     purrr,
     reactable,
     rlang,

@@ -75,4 +75,25 @@ plot_clusters(
 
 ## How to interpret the clusters of projects
 
+The interpretation of the clusters resulting from the typology is done using the [`{NaileR}`](https://cran.r-project.org/web/packages/NaileR/index.html) package. This package allows generating an LLM prompt to analyze the categorical latent variable corresponding to the cluster. All the information contained in the dataset prepared in French (excepting the columns with the id and the one with the name) is used as explanatory variables to describe the clusters.
+
+The generated LLM prompt is then provided to the Ollama LLM, by using the [`{ollamar}`](https://cran.r-project.org/web/packages/ollamar/index.html) package.
+
+The process is described in the diagram below:
+
+```{r, echo=FALSE, out.width="100%", fig.align='center'}
+knitr::include_graphics("figures/llm.png")
+```
+
+The `interpret_clusters()` function realizes these operations:
+
+```{r}
+res_interpret_clusters <- interpret_clusters(
+  res_analysis = res_analysis
+)
+```
+
+
+
+
 
