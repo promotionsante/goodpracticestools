@@ -41,5 +41,4 @@
 #'   \item{ Niveau comportemental et structurel }{  character }
 #'   \item{ Priorités }{  character }
 #' }
-#' @source Source
 "data_raw_fr"
