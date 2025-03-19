@@ -1,6 +1,7 @@
 ---
 title: "How to obtain a typology of projects"
 output: rmarkdown::html_vignette
+bibliography: references.bib
 vignette: >
   %\VignetteIndexEntry{how-to-obtain-a-typology-of-projects}
   %\VignetteEngine{knitr::rmarkdown}
@@ -15,8 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, warning=FALSE, message=FALSE}
-# library(goodpracticestools)
-pkgload::load_all()
+library(goodpracticestools)
 ```
 
 ## How to explore the variability of the projects
@@ -27,7 +27,7 @@ The data was prepared using the `prepare_data()` function. See the article [How 
 data("data_fr")
 ```
 
-The data are analyzed using **Multiple Correspondence Analysis** (MCA), a statistical method that helps explore and visualize relationships between several categorical variables. 
+The data are analyzed using **Multiple Correspondence Analysis** (MCA) a statistical method that helps explore and visualize relationships between several categorical variables. The [`{FactoMineR}`](https://cran.r-project.org/web/packages/FactoMineR/index.html) package [@Le2008] is used.
 
 In this analysis, the active variables are as follows: 
 
@@ -75,9 +75,9 @@ plot_clusters(
 
 ## How to interpret the clusters of projects
 
-The interpretation of the clusters resulting from the typology is done using the [`{NaileR}`](https://cran.r-project.org/web/packages/NaileR/index.html) package. This package allows generating an LLM prompt to analyze the categorical latent variable corresponding to the cluster. All the information contained in the dataset prepared in French (excepting the columns with the id and the one with the name) is used as explanatory variables to describe the clusters.
+The interpretation of the clusters resulting from the typology is done using the [`{NaileR}`](https://cran.r-project.org/web/packages/NaileR/index.html) package [@Herve2025]. This package allows generating an LLM prompt to analyze the categorical latent variable corresponding to the cluster. All the information contained in the dataset prepared in French (excepting the columns with the id and the one with the name) is used as explanatory variables to describe the clusters.
 
-The generated LLM prompt is then provided to the Ollama LLM, by using the [`{ollamar}`](https://cran.r-project.org/web/packages/ollamar/index.html) package.
+The generated LLM prompt is then provided to the Ollama LLM, by using the [`{ollamar}`](https://cran.r-project.org/web/packages/ollamar/index.html) package [@Lin2025JOSS].
 
 The process is described in the diagram below:
 
@@ -128,6 +128,4 @@ cat(res_interpret_clusters$res_desc_llm_de)
 cat(res_interpret_clusters$res_desc_llm_fr)
 ```
 
-
-
-
+### References
