@@ -10,7 +10,8 @@ plot_distrib_level(
   title_font_size = 16,
   text_font_size = 11,
   font_family = "DIN Pro",
-  language = c("fr", "de")
+  language = c("fr", "de"),
+  color_background = "white"
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ plot_distrib_level(
 \item{font_family}{Character.}
 
 \item{language}{Character. "fr" or "de".}
+
+\item{color_background}{Character. Color of the background}
 }
 \value{
 An interactive plot

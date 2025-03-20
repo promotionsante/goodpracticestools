@@ -14,7 +14,10 @@ plot_distrib_type(
   xmin = 1,
   xmax = 2,
   ymin = 1.3,
-  ymax = 2
+  ymax = 2,
+  xdef = 0,
+  ydef = 2.4,
+  color_background = "white"
 )
 }
 \arguments{
@@ -37,6 +40,12 @@ plot_distrib_type(
 \item{ymin}{Integer.}
 
 \item{ymax}{Integer.}
+
+\item{xdef}{Integer.}
+
+\item{ydef}{Integer.}
+
+\item{color_background}{Character. Color of the background}
 }
 \value{
 An interactive plot
