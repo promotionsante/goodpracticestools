@@ -287,5 +287,4 @@
 #'   \item{ desc_www }{  numeric }
 #'   \item{ desc_youp }{  numeric }
 #' }
-#' @source Source
 "data_fr"

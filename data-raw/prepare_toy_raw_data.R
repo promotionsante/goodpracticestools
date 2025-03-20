@@ -39,3 +39,23 @@ usethis::use_data(
 checkhelper::use_data_doc(
   "data_raw_de"
 )
+
+## code to prepare `res_interpret_clusters` object goes here
+data("data_fr")
+
+res_analysis <- get_clusters(
+  data = data_fr
+)
+
+res_interpret_clusters <- interpret_clusters(
+  res_analysis = res_analysis
+)
+
+usethis::use_data(
+  res_interpret_clusters,
+  overwrite = TRUE
+)
+
+checkhelper::use_data_doc(
+  "res_interpret_clusters"
+)

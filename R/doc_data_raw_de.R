@@ -41,5 +41,4 @@
 #'   \item{ Verhaltens- und Verhältnisorientierung }{  character }
 #'   \item{ Schwerpunkte }{  character }
 #' }
-#' @source Source
 "data_raw_de"
