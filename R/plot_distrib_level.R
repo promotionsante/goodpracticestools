@@ -53,7 +53,20 @@ plot_distrib_level <- function(
       fill = color
     ) +
     ggtitle(title) +
-    theme_minimal()
+    theme_minimal() +
+    theme(
+      panel.background = element_rect(
+        fill = NA
+      ),
+      plot.background = element_rect(
+        fill = NA
+      ),
+      axis.title = element_blank(),
+      axis.text = element_text(
+        size = text_font_size
+      ),
+      legend.position = "none"
+    )
 
   if (font_family %in% system_fonts()$family) {
 
@@ -63,13 +76,7 @@ plot_distrib_level <- function(
           family = font_family,
           size = title_font_size,
           hjust = 0.5
-        ),
-        axis.title = element_blank(),
-        axis.text = element_text(
-          size = text_font_size,
-          family = font_family
-        ),
-        legend.position = "none"
+        )
       )
 
   } else {
@@ -79,14 +86,7 @@ plot_distrib_level <- function(
         plot.title = element_text(
           size = title_font_size,
           hjust = 0.5
-        ),
-        panel.background = element_blank(),
-        plot.background = element_blank(),
-        axis.title = element_blank(),
-        axis.text = element_text(
-          size = text_font_size
-        ),
-        legend.position = "none"
+        )
       )
 
   }

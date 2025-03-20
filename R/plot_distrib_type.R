@@ -49,7 +49,16 @@ plot_distrib_type <- function(
       range = c(20, 50)
     ) +
     ggtitle(title) +
-    theme_void()
+    theme_void() +
+    theme(
+      panel.background = element_rect(
+        fill = NA
+      ),
+      plot.background = element_rect(
+        fill = NA
+      ),
+      legend.position = "none"
+    )
 
   if (font_family %in% system_fonts()$family) {
 
@@ -59,14 +68,7 @@ plot_distrib_type <- function(
           family = font_family,
           size = title_font_size,
           hjust = 0.5
-        ),
-        panel.background = element_rect(
-          fill = "red"
-        ),
-        plot.background = element_rect(
-          fill = "red"
-        ),
-        legend.position = "none"
+        )
       )
 
   } else {
@@ -76,16 +78,8 @@ plot_distrib_type <- function(
         plot.title = element_text(
           size = title_font_size,
           hjust = 0.5
-        ),
-        panel.background = element_rect(
-          fill = "red"
-        ),
-        plot.background = element_rect(
-          fill = "red"
-        ),
-        legend.position = "none"
+        )
       )
-
   }
 
   annotations <- data.frame(
