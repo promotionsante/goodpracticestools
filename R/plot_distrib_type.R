@@ -11,7 +11,7 @@
 #' @param ymin  Integer.
 #' @param ymax  Integer.
 #'
-#' @importFrom ggplot2 ggplot aes ggtitle theme_void theme element_text geom_text scale_size_continuous xlim ylim
+#' @importFrom ggplot2 ggplot aes ggtitle theme_void theme element_text element_rect geom_text scale_size_continuous xlim ylim
 #' @importFrom ggiraph geom_point_interactive girafe
 #' @importFrom systemfonts system_fonts
 #'
@@ -60,6 +60,12 @@ plot_distrib_type <- function(
           size = title_font_size,
           hjust = 0.5
         ),
+        panel.background = element_rect(
+          fill = "red"
+        ),
+        plot.background = element_rect(
+          fill = "red"
+        ),
         legend.position = "none"
       )
 
@@ -70,6 +76,12 @@ plot_distrib_type <- function(
         plot.title = element_text(
           size = title_font_size,
           hjust = 0.5
+        ),
+        panel.background = element_rect(
+          fill = "red"
+        ),
+        plot.background = element_rect(
+          fill = "red"
         ),
         legend.position = "none"
       )

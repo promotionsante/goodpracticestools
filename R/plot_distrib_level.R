@@ -80,6 +80,8 @@ plot_distrib_level <- function(
           size = title_font_size,
           hjust = 0.5
         ),
+        panel.background = element_blank(),
+        plot.background = element_blank(),
         axis.title = element_blank(),
         axis.text = element_text(
           size = text_font_size
