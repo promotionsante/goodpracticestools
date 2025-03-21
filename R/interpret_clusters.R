@@ -97,6 +97,12 @@ Supprime toute phrase d'introduction ou de conclusion, je veux directement le pr
     res_desc_llm_fr
   )
 
+  res_desc_llm_fr <- sub(
+    "^.*\n\nCluster 1",
+    "Cluster 1",
+    res_desc_llm_fr
+  )
+
   # run the llm in DE
   res_desc_llm_de <- generate(
     model = "llama3.1",
@@ -113,6 +119,12 @@ Supprime toute phrase d'introduction ou de conclusion, je veux directement le pr
   res_desc_llm_de <- sub(
     "^.*\n\n\\*\\*Cluster 1",
     "**Cluster 1",
+    res_desc_llm_de
+  )
+
+  res_desc_llm_de <- sub(
+    "^.*\n\nCluster 1",
+    "Cluster 1",
     res_desc_llm_de
   )
 
