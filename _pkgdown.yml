@@ -24,3 +24,5 @@ navbar:
         href: articles/tech-adr.html
       - text: Coverage report
         href: articles/coverage-report.html
+      - text: Dependencies Licenses
+        href: articles/tech-deps.html
