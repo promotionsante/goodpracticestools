@@ -20,7 +20,8 @@ trad_plot_distrib_type <- list(
       "kids" = "Enfants/adolescents",
       "seniors" = "Personnes \u00e2g\u00e9es"
     ),
-    title = "R\u00e9partition des types de projets"
+    title = "R\u00e9partition des types de projets",
+    caption = "Note : Certains projets ne sont associ\u00e9s \u00e0 aucun type,\ntandis que d\'autres sont associ\u00e9s \u00e0 plusieurs types."
   ),
   de = list(
     text_types = list(
@@ -29,7 +30,8 @@ trad_plot_distrib_type <- list(
       "kids" = "Kinder/Jugendliche",
       "seniors" = "\u00c4ltere Menschen"
     ),
-    title = "Verteilung der Projekttypen"
+    title = "Verteilung der Projekttypen",
+    caption = "Hinweis: Einige Projekte sind keinem Typ zugeordnet,\nw\u00e4hrend andere mehreren Typen zugeordnet sind."
   )
 )
 

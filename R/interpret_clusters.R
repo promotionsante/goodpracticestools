@@ -57,7 +57,8 @@ Cluster X : [Ta recommandation de nom ici]
 [Ton résumé des caractéristiques du groupe ici];
 Évite le terme 'Promotion' dans tes recommandations de noms et privilégie plutôt le terme de 'Pr\u00e9vention de la sant\u00e9'.
 Si le groupe de projets est dédié à un type de publics (enfants, adolescents, jeunes adultes, personnes âgées),
-fais le figurer dans le nom du groupe à chaque fois.") |>
+fais le figurer dans le nom du groupe à chaque fois. Ne me renvoie que la description des clusters.
+Supprime toute phrase d'introduction ou de conclusion, je veux directement le premier Cluster.") |>
     str_replace_all("\n", " ")
 
   # get the prompt
@@ -90,11 +91,41 @@ fais le figurer dans le nom du groupe à chaque fois.") |>
     output = "text"
   )
 
+  res_desc_llm_fr <- sub(
+    "^.*\n\n\\*\\*Cluster 1",
+    "**Cluster 1",
+    res_desc_llm_fr
+  )
+
+  res_desc_llm_fr <- sub(
+    "^.*\n\nCluster 1",
+    "Cluster 1",
+    res_desc_llm_fr
+  )
+
   # run the llm in DE
   res_desc_llm_de <- generate(
     model = "llama3.1",
-    prompt = paste0("Peux-tu me traduire tout le texte suivant en allemand en gardant la m\u00eame structure :", res_desc_llm_fr),
+    prompt = paste0("Peux-tu me traduire tout le texte suivant en allemand en gardant la m\u00eame structure et en supprimant toute phrase d\'introduction ou de conclusion. Je veux juste les descriptions des clusters. Pas de phrase en fran\u00e7ais au d\u00e9but ou \u00e0 la fin. Dans ta traduction, utilise le terme \'cluster\' en allemand, et pas \'kluster\'. Garde bien les balises type \n et *. Voici le texte \u00e0 traduire :", res_desc_llm_fr),
     output = "text"
+  )
+
+  res_desc_llm_de <- sub(
+    "Kluster",
+    "Cluster",
+    res_desc_llm_de
+  )
+
+  res_desc_llm_de <- sub(
+    "^.*\n\n\\*\\*Cluster 1",
+    "**Cluster 1",
+    res_desc_llm_de
+  )
+
+  res_desc_llm_de <- sub(
+    "^.*\n\nCluster 1",
+    "Cluster 1",
+    res_desc_llm_de
   )
 
   return(

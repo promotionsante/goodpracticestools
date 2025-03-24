@@ -10,8 +10,11 @@
 #' @param xmax  Integer.
 #' @param ymin  Integer.
 #' @param ymax  Integer.
+#' @param xdef  Integer.
+#' @param ydef  Integer.
+#' @param color_background Character. Color of the background
 #'
-#' @importFrom ggplot2 ggplot aes ggtitle theme_void theme element_text geom_text scale_size_continuous xlim ylim
+#' @importFrom ggplot2 ggplot aes ggtitle theme_void theme element_text element_rect geom_text scale_size_continuous xlim ylim
 #' @importFrom ggiraph geom_point_interactive girafe
 #' @importFrom systemfonts system_fonts
 #'
@@ -27,13 +30,17 @@ plot_distrib_type <- function(
     xmin = 1,
     xmax = 2,
     ymin = 1.3,
-    ymax = 2
+    ymax = 2,
+    xdef = 0,
+    ydef = 2.4,
+    color_background = "white"
 ) {
 
   language <- match.arg(language)
 
   text_types <- trad_plot_distrib_type[[language]]$text_types
   title <- trad_plot_distrib_type[[language]]$title
+  caption <- trad_plot_distrib_type[[language]]$caption
 
   p <- ggplot(data = data) +
     aes(x = x, y = y, size = size, color = color) +
@@ -49,7 +56,24 @@ plot_distrib_type <- function(
       range = c(20, 50)
     ) +
     ggtitle(title) +
-    theme_void()
+    theme_void() +
+    labs(
+      caption = caption
+    ) +
+    theme(
+      panel.background = element_rect(
+        fill = color_background,
+        color = color_background
+      ),
+      plot.background = element_rect(
+        fill = color_background,
+        color = color_background
+      ),
+      plot.caption = element_text(
+        face = "italic"
+      ),
+      legend.position = "none"
+    )
 
   if (font_family %in% system_fonts()$family) {
 
@@ -59,8 +83,7 @@ plot_distrib_type <- function(
           family = font_family,
           size = title_font_size,
           hjust = 0.5
-        ),
-        legend.position = "none"
+        )
       )
 
   } else {
@@ -70,15 +93,13 @@ plot_distrib_type <- function(
         plot.title = element_text(
           size = title_font_size,
           hjust = 0.5
-        ),
-        legend.position = "none"
+        )
       )
-
   }
 
   annotations <- data.frame(
-    x = c(xmin, xmax, 0, 0),
-    y = c(2.4, 2.4, ymax, ymin),
+    x = c(xmin, xmax, xdef, xdef),
+    y = c(ydef, ydef, ymax, ymin),
     label = c(
       text_types[["nutrition"]],
       text_types[["mental"]],
@@ -93,7 +114,7 @@ plot_distrib_type <- function(
       data = annotations,
       aes(x = x, y = y, label = label),
       family = font_family,
-      size = text_font_size / 3,
+      size = text_font_size,
       color = "black"
     )
 

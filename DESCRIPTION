@@ -1,7 +1,7 @@
 Package: goodpracticestools
 Title: Create the elements of the overview "Summary of Best Practices in
     Cantonal Action Programs" by Promotion Santé Suisse
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
     person("Margot", "Brard", , "margot@thinkr.fr", role = c("aut", "cre"))
 Description: Allows the person generating the overview to enrich it with
@@ -11,6 +11,7 @@ Depends:
     R (>= 3.5)
 Imports: 
     dplyr,
+    DT,
     FactoMineR,
     forcats,
     ggiraph,
@@ -20,7 +21,6 @@ Imports:
     NaileR,
     ollamar,
     purrr,
-    reactable,
     rlang,
     spacyr,
     stringr,
@@ -31,6 +31,7 @@ Imports:
     tm
 Suggests: 
     knitr,
+    readxl,
     rmarkdown,
     stringi,
     testthat (>= 3.0.0)

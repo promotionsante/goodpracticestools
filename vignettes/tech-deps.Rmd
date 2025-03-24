@@ -1,0 +1,23 @@
+---
+title: "Dependencies Licenses"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{deps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r, echo=FALSE}
+readxl::read_excel(
+  "figures/table_deps.xlsx"
+) |> 
+  knitr::kable()
+```
+

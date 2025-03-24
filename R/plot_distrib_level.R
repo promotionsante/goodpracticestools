@@ -6,6 +6,7 @@
 #' @param text_font_size Integer. Font size for the texts.
 #' @param font_family Character.
 #' @param language Character. "fr" or "de".
+#' @param color_background Character. Color of the background
 #'
 #' @importFrom dplyr mutate case_when  mutate desc
 #' @importFrom forcats fct_reorder
@@ -21,7 +22,8 @@ plot_distrib_level <- function(
     title_font_size = 16,
     text_font_size = 11,
     font_family = "DIN Pro",
-    language = c("fr", "de")
+    language = c("fr", "de"),
+    color_background = "white"
 ) {
 
   language <- match.arg(language)
@@ -53,7 +55,22 @@ plot_distrib_level <- function(
       fill = color
     ) +
     ggtitle(title) +
-    theme_minimal()
+    theme_minimal() +
+    theme(
+      panel.background = element_rect(
+        fill = color_background,
+        color = color_background
+      ),
+      plot.background = element_rect(
+        fill = color_background,
+        color = color_background
+      ),
+      axis.title = element_blank(),
+      axis.text = element_text(
+        size = text_font_size
+      ),
+      legend.position = "none"
+    )
 
   if (font_family %in% system_fonts()$family) {
 
@@ -63,13 +80,7 @@ plot_distrib_level <- function(
           family = font_family,
           size = title_font_size,
           hjust = 0.5
-        ),
-        axis.title = element_blank(),
-        axis.text = element_text(
-          size = text_font_size,
-          family = font_family
-        ),
-        legend.position = "none"
+        )
       )
 
   } else {
@@ -79,12 +90,7 @@ plot_distrib_level <- function(
         plot.title = element_text(
           size = title_font_size,
           hjust = 0.5
-        ),
-        axis.title = element_blank(),
-        axis.text = element_text(
-          size = text_font_size
-        ),
-        legend.position = "none"
+        )
       )
 
   }
