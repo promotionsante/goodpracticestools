@@ -4,8 +4,7 @@
 #' @param nb_by_page Integer. Number of projects to be displayed by page.
 #' @param language Character. "fr" or "de".
 #'
-#' @importFrom reactable reactable colDef
-#' @importFrom purrr set_names map
+#' @importFrom DT datatable
 #'
 #' @return An interactive table
 #' @export
@@ -19,27 +18,27 @@ show_raw_data <- function(
 
   column_names <- colnames(data)
 
-  list_col_size <- column_names |>
-    set_names() |>
-    map(
-      ~ colDef(width = 200)
-    )
+  col_defs <- lapply(column_names, function(col) list(width = '200px'))
+  names(col_defs) <- column_names
 
-  list_col_size[vec_large_col[[language]]] <- map(
-    vec_large_col[[language]],
-    ~ colDef(width = 1000)
-  )
+  for (col in vec_large_col[[language]]) {
+    col_defs[[col]]$width <- '1000px'
+  }
 
-  list_col_size[vec_medium_col[[language]]] <- map(
-    vec_medium_col[[language]],
-    ~ colDef(width = 500)
-  )
+  for (col in vec_medium_col[[language]]) {
+    col_defs[[col]]$width <- '500px'
+  }
 
-  reactable(
+  datatable(
     data,
-    defaultPageSize = nb_by_page,
-    columns = list_col_size,
-    searchable = TRUE
+    options = list(
+      pageLength = nb_by_page,
+      autoWidth = TRUE,
+      columnDefs = lapply(seq_along(col_defs), function(i) {
+        list(targets = i - 1, width = col_defs[[i]]$width)
+      })
+    ),
+    filter = 'top'
   )
 
 }
