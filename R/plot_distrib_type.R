@@ -40,6 +40,7 @@ plot_distrib_type <- function(
 
   text_types <- trad_plot_distrib_type[[language]]$text_types
   title <- trad_plot_distrib_type[[language]]$title
+  caption <- trad_plot_distrib_type[[language]]$caption
 
   p <- ggplot(data = data) +
     aes(x = x, y = y, size = size, color = color) +
@@ -56,6 +57,9 @@ plot_distrib_type <- function(
     ) +
     ggtitle(title) +
     theme_void() +
+    labs(
+      caption = caption
+    ) +
     theme(
       panel.background = element_rect(
         fill = color_background,
@@ -64,6 +68,9 @@ plot_distrib_type <- function(
       plot.background = element_rect(
         fill = color_background,
         color = color_background
+      ),
+      plot.caption = element_text(
+        face = "italic"
       ),
       legend.position = "none"
     )
