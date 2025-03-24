@@ -18,25 +18,27 @@ show_raw_data <- function(
 
   column_names <- colnames(data)
 
-  col_defs <- lapply(column_names, function(col) list(width = '200px'))
-  names(col_defs) <- column_names
+  col_widths <- lapply(column_names, function(col) list(width = '200px'))
+  names(col_widths) <- column_names
 
   for (col in vec_large_col[[language]]) {
-    col_defs[[col]]$width <- '1000px'
+    col_widths[[col]]$width <- '1000px'
   }
 
   for (col in vec_medium_col[[language]]) {
-    col_defs[[col]]$width <- '500px'
+    col_widths[[col]]$width <- '500px'
   }
+
+  column_defs <- lapply(seq_along(col_widths), function(i) {
+    list(targets = i, width = col_widths[[i]]$width)
+  })
 
   datatable(
     data,
     options = list(
-      pageLength = nb_by_page,
       autoWidth = TRUE,
-      columnDefs = lapply(seq_along(col_defs), function(i) {
-        list(targets = i - 1, width = col_defs[[i]]$width)
-      })
+      pageLength = nb_by_page,
+      columnDefs = column_defs
     ),
     filter = 'top'
   )
