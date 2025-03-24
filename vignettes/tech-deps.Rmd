@@ -2,7 +2,7 @@
 title: "Dependencies Licenses"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{adr}
+  %\VignetteIndexEntry{deps}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

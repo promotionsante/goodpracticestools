@@ -106,7 +106,7 @@ Supprime toute phrase d'introduction ou de conclusion, je veux directement le pr
   # run the llm in DE
   res_desc_llm_de <- generate(
     model = "llama3.1",
-    prompt = paste0("Peux-tu me traduire tout le texte suivant en allemand en gardant la m\u00eame structure et en supprimant toute phrase d'introduction ou de conclusion. Je veux juste les descriptions des clusters. Pas de phrase en français au début ou à la fin. Dans ta traduction, utilise le terme 'cluster' en allemand, et pas 'kluster'. Garde bien les balises type \n et *. Voici le texte à traduire :", res_desc_llm_fr),
+    prompt = paste0("Peux-tu me traduire tout le texte suivant en allemand en gardant la m\u00eame structure et en supprimant toute phrase d\'introduction ou de conclusion. Je veux juste les descriptions des clusters. Pas de phrase en fran\u00e7ais au d\u00e9but ou \u00e0 la fin. Dans ta traduction, utilise le terme \'cluster\' en allemand, et pas \'kluster\'. Garde bien les balises type \n et *. Voici le texte \u00e0 traduire :", res_desc_llm_fr),
     output = "text"
   )
 
