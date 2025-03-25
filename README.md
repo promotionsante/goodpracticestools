@@ -29,7 +29,7 @@ pak::pak("promotionsante/goodpracticestools")
 
 ## Documentation
 
-As the designer of the HTML summary, you will find several elements in
+As the designer of the HTML overview, you will find several elements in
 the package documentation to help you use the different features:
 
 - [How to prepare data for statistical
@@ -38,3 +38,18 @@ the package documentation to help you use the different features:
   graphically](https://promotionsante.github.io/goodpracticestools/articles/how-to-explore-the-projects-graphically.html)
 - [How to obtain a typology of
   projects](https://promotionsante.github.io/goodpracticestools/articles/how-to-obtain-a-typology-of-projects.html)
+
+**Techinal documentation**
+
+As the developer of this package, you will find several articles in the
+“Tech articles” tab to help you understand how to maintain this package.
+In particular, you will find the following articles:
+
+- [How to maintain this
+  package](https://promotionsante.github.io/goodpracticestools/articles/how-to-maintain-this-package.html)
+- [Coverage
+  report](https://promotionsante.github.io/goodpracticestools/articles/coverage-report.html)
+- [Architecture Decision
+  Records](https://promotionsante.github.io/goodpracticestools/articles/tech-adr.html)
+- [Dependencies
+  Licenses](https://promotionsante.github.io/goodpracticestools/articles/tech-deps.html)

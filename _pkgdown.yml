@@ -20,9 +20,15 @@ navbar:
     tech:
       text: Tech articles
       menu:
-      - text: Architecture Decisions Records
-        href: articles/tech-adr.html
+      - text: -------
+      - text: Development
+      - text: How to maintain this package
+        href: articles/tech-how-to-maintain-this-package.html
       - text: Coverage report
         href: articles/coverage-report.html
+      - text: -------
+      - text: Other elements of documentation
+      - text: Architecture Decisions Records
+        href: articles/tech-adr.html
       - text: Dependencies Licenses
         href: articles/tech-deps.html
