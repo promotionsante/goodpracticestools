@@ -1,7 +1,7 @@
 Package: goodpracticestools
 Title: Create the elements of the overview "Summary of Best Practices in
     Cantonal Action Programs" by Promotion Santé Suisse
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     person("Margot", "Brard", , "margot@thinkr.fr", role = c("aut", "cre"))
 Description: Allows the person generating the overview to enrich it with

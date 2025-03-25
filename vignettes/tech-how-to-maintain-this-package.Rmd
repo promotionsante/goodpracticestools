@@ -1,0 +1,27 @@
+---
+title: "How to maintain this package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tech-how-to-maintain-this-package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Set-up
+
+You will need to install Ollama (LLM) locally to use this package. More details can be found here: https://ollama.com/. 
+
+You will also need to install the **Din Pro** font on your machine to fully leverage the package's features.
+
+## Development
+
+Some unit tests and vignette examples can only be run locally, especially those involving NLP and LLM models. The relevant unit tests are marked with `skip_on_ci()` in the code. All tests must be run locally before pushing the codebase to the remote server. This process is performed during `devtools::check()` in the `dev/check_and_config_before_merge.R` file. The code coverage report and the pkgdown site are also generated locally.
+
+The verification instructions are all detailed in the `dev/check_and_config_before_merge.R` file. They must all be executed before pushing the codebase to the remote server.

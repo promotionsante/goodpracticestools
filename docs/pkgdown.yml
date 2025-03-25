@@ -7,4 +7,5 @@ articles:
   how-to-prepare-data-for-statistical-analysis: how-to-prepare-data-for-statistical-analysis.html
   tech-adr: tech-adr.html
   tech-deps: tech-deps.html
-last_built: 2025-03-24T20:42Z
+  tech-how-to-maintain-this-package: tech-how-to-maintain-this-package.html
+last_built: 2025-03-25T07:36Z
