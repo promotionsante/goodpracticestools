@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/promotionsante/goodpracticestools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/promotionsante/goodpracticestools/actions/workflows/R-CMD-check.yaml)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 ## Overview
@@ -46,7 +48,7 @@ As the developer of this package, you will find several articles in the
 In particular, you will find the following articles:
 
 - [How to maintain this
-  package](https://promotionsante.github.io/goodpracticestools/articles/how-to-maintain-this-package.html)
+  package](https://promotionsante.github.io/goodpracticestools/articles/tech-how-to-maintain-this-package.html)
 - [Coverage
   report](https://promotionsante.github.io/goodpracticestools/articles/coverage-report.html)
 - [Architecture Decision
